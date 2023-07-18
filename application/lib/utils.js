@@ -29,4 +29,40 @@
     if (!exp) return value;
     return value * 10 ** exp;
   },
+
+  alpacaConnect(keys) {
+    // console.debug(keys);
+    // const paper = keys.live !== undefined ? !keys.live : true;
+    // console.debug({ paper });
+    return new lib.Alpaca({
+      keyId: keys.pkey,
+      secretKey: keys.secret,
+      paper: keys.live !== undefined ? !keys.live : true, // true, false
+      feed: 'iex', // 'iex', 'sip'
+    });
+  },
+
+  makeResult(command, data) {
+    // return {
+    //   command: command ? command : 'empty',
+    //   result: {
+    //     data: data ? data : {},
+    //     error: { status: false, list: [] },
+    //     end: false,
+    //     time: { start: this.getMilliseconds(), end: null },
+    //   },
+    //   error: false,
+    //   errorText: '',
+    // };
+    return {
+      command: command ? command : 'empty',
+      data: data ? data : {},
+      error: false,
+      errorText: '',
+    };
+  },
+
+  getMilliseconds() {
+    return new Date().getTime();
+  },
 });

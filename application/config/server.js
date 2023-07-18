@@ -24,7 +24,7 @@
   workers: {
     pool: 2,
     wait: 2000,
-    timeout: 5000,
+    timeout: 10000,
   },
   cors: {
     origin: '*',

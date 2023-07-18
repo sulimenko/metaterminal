@@ -66,6 +66,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@alpacahq/alpaca-trade-api": "^3.0.1",
     "impress": "^3.0.0",
     "metasql": "^3.0.0-alpha.1",
     "pg": "^8.11.1",
