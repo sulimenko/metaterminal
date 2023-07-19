@@ -39,12 +39,7 @@ const KEY_CODE = {
   ACCENT: 192,
 };
 
-const KEYBOARD_LAYOUT = [
-  '1234567890',
-  'qwertyuiop',
-  'asdfghjkl<',
-  '^zxcvbnm_>',
-];
+const KEYBOARD_LAYOUT = ['1234567890', 'qwertyuiop', 'asdfghjkl<', '^zxcvbnm_>'];
 
 const KEY_NAME = {};
 for (const keyName in KEY_CODE) KEY_NAME[KEY_CODE[keyName]] = keyName;
@@ -280,6 +275,7 @@ class Keyboard {
 
 class Scroller {
   constructor(application) {
+    console.log(application);
     this.viewportHeight = 0;
     this.viewableRatio = 0;
     this.contentHeight = 0;

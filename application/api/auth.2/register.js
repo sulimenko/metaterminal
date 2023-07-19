@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
 ({
   access: 'public',
-  method: async ({ login, password, fullName }) => {
+  method: async ({ user_id, login, password }) => {
     const hash = await metarhia.metautil.hashPassword(password);
-    await api.auth.provider.registerUser(login, hash, fullName);
+    await api.auth.provider.registerUser(user_id, login, hash);
     const token = await context.client.startSession();
     return { status: 'success', token };
   },

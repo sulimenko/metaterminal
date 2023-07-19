@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 ({
   generateToken() {
     const { characters, secret, length } = config.sessions;
@@ -7,7 +8,7 @@
   async saveSession(token, data) {
     console.log({ saveSession: { token, data } });
     try {
-      await db.pg.update('Session', { data: JSON.stringify(data) }, { token });
+      await db.pg.update('terminal_users', { data: JSON.stringify(data) }, { token });
     } catch (error) {
       console.error(error);
     }
@@ -16,25 +17,25 @@
   async createSession(token, data, fields = {}) {
     const record = { token, data: JSON.stringify(data), ...fields };
     console.log({ createSession: record });
-    return db.pg.insert('Session', record);
+    return db.pg.insert('terminal_tokens', record);
   },
 
   async readSession(token) {
-    const record = await db.pg.row('Session', ['data'], { token });
+    const record = await db.pg.row('terminal_users', ['data'], { token });
     console.log({ readSession: { token, record } });
     if (record && record.data) return record.data;
     return null;
   },
 
   async deleteSession(token) {
-    return db.pg.delete('Session', { token });
+    return db.pg.delete('terminal_users', { token });
   },
 
-  async registerUser(login, password) {
-    return db.pg.insert('Account', { login, password });
+  async registerUser(user_id, login, password) {
+    return db.pg.insert('terminal_users', { user_id, login, password });
   },
 
   async getUser(login) {
-    return db.pg.row('Account', { login });
+    return db.pg.row('terminal_users', { login });
   },
 });
