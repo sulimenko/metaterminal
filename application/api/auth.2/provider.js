@@ -8,7 +8,7 @@
   async saveSession(token, data) {
     console.log({ saveSession: { token, data } });
     try {
-      await db.pg.update('terminal_users', { data: JSON.stringify(data) }, { token });
+      await db.pg.update('terminal_tokens', { data: JSON.stringify(data) }, { token });
     } catch (error) {
       console.error(error);
     }
@@ -21,14 +21,14 @@
   },
 
   async readSession(token) {
-    const record = await db.pg.row('terminal_users', ['data'], { token });
+    const record = await db.pg.row('terminal_tokens', ['data'], { token });
     console.log({ readSession: { token, record } });
     if (record && record.data) return record.data;
     return null;
   },
 
   async deleteSession(token) {
-    return db.pg.delete('terminal_users', { token });
+    return db.pg.delete('terminal_tokens', { token });
   },
 
   async registerUser(user_id, login, password) {

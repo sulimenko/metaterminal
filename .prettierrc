@@ -3,7 +3,6 @@
   "trailingComma": "all",
   "printWidth": 140,
   "arrowParens": "always",
-  "properties": "never",
   "overrides": [
     {
       "files": ["**/.*rc", "**/*.json"],

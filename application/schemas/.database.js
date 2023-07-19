@@ -1,10 +1,8 @@
 ({
-  name: 'example',
-  description: 'Example database schema',
-  version: 4,
+  name: 'ptfin',
+  description: 'database schema',
+  version: 1,
   driver: 'pg',
 
-  authors: [
-    { name: 'Timur Shemsedinov', email: 'timur.shemsedinov@gmail.com' },
-  ],
+  authors: [{ name: 'Sulimenko Alexey', email: 'sulimenkoas@gmail.com' }],
 });

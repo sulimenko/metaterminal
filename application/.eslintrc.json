@@ -3,17 +3,6 @@
     "sourceType": "module"
   },
   "rules": {
-    "id-denylist": [
-      2,
-      "application",
-      "node",
-      "npm",
-      "api",
-      "lib",
-      "db",
-      "domain",
-      "config",
-      "metarhia"
-    ]
+    "id-denylist": [2, "application", "node", "npm", "api", "lib", "db", "domain", "config", "metarhia"]
   }
 }
