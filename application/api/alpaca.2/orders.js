@@ -2,7 +2,7 @@
   access: 'public',
   method: async ({ keys, status, limit }) => {
     const alpaca = lib.utils.alpacaConnect(keys);
-    const responce = lib.utils.makeResult('createOrder', { orders: [] });
+    const responce = lib.utils.makeResult('orders', { orders: [] });
 
     status = status && ['all', 'closed', 'open'].includes(status) ? status : 'open';
     limit = limit && typeof limit === 'number' ? limit : 20;

@@ -21,11 +21,11 @@ setTimeout(async () => {
 
 const tasks = [
   { get: '/', status: 302 },
-  { get: '/console.js' },
+  { get: '/connect.js' },
   {
     post: '/api',
     method: 'signIn',
-    args: { login: 'marcus', password: 'marcus' },
+    args: { login: 'sulimenko', password: '123' },
   },
 ];
 
