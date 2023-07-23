@@ -1,6 +1,4 @@
 async () => {
-  if (application.worker.id !== 'W5') return;
-
   for (const type of ['paper', 'main']) {
     lib.alpaca.client.set({ key: type });
   }
@@ -10,9 +8,13 @@ async () => {
   // exclusive: false,
   // });
 
-  console.debug('Connect to alpaca');
+  // console.debug(lib.alpaca.client);
   // const client = lib.alpaca.client.get({ key: 'main' });
   // console.log(client);
+
+  if (application.worker.id === 'W1') {
+    console.debug('Connect to alpaca');
+  }
 
   // if (application.worker.id === 'W1') {
   //   // console.log('alpaca', lib.alpaca);
