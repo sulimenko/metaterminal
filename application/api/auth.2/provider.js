@@ -22,7 +22,7 @@
 
   async readSession(token) {
     const record = await db.pg.row('terminal_tokens', ['data'], { token });
-    console.log({ readSession: { token, record } });
+    // console.log({ readSession: { token, record } });
     if (record && record.data) return record.data;
     return null;
   },

@@ -7,8 +7,8 @@ async () => {
     setTimeout(async () => {
       await metacom.load('auth', 'console', 'example', 'files');
       const res = await metacom.api.auth.signin({
-        login: 'marcus',
-        password: 'marcus',
+        login: 'balex',
+        password: 'test',
       });
       console.log({ res });
     }, 1000);

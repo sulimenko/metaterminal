@@ -1,23 +1,18 @@
 async () => {
-  if (application.worker.id === 'W1') {
-    console.debug('Connect to alpaca');
+  if (application.worker.id !== 'W5') return;
+
+  for (const type of ['paper', 'main']) {
+    lib.alpaca.client.set({ key: type });
   }
+  // await application.invoke({
+  // method: 'lib.alpaca.connect',
+  // args: {},
+  // exclusive: false,
+  // });
 
-  lib.Alpaca = npm.alpacahqAlpacaTradeApi;
-
-  lib.alpaca.paper = new lib.Alpaca({
-    keyId: config.alpaca.paper.key,
-    secretKey: config.alpaca.paper.secret,
-    paper: config.alpaca.paper.paper, // true, false
-    feed: 'iex', // 'iex', 'sip'
-  });
-
-  lib.alpaca.main = new lib.Alpaca({
-    keyId: config.alpaca.main.key,
-    secretKey: config.alpaca.main.secret,
-    paper: config.alpaca.main.paper, // true, false
-    feed: 'iex', // 'iex', 'sip'
-  });
+  console.debug('Connect to alpaca');
+  // const client = lib.alpaca.client.get({ key: 'main' });
+  // console.log(client);
 
   // if (application.worker.id === 'W1') {
   //   // console.log('alpaca', lib.alpaca);
