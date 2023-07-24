@@ -31,10 +31,7 @@
   },
 
   alpacaConnect(keys) {
-    // console.debug(keys);
-    // const paper = keys.live !== undefined ? !keys.live : true;
-    // console.debug({ paper });
-    return new lib.Alpaca({
+    return lib.alpaca.new({
       keyId: keys.pkey,
       secretKey: keys.secret,
       paper: keys.live !== undefined ? !keys.live : true, // true, false
