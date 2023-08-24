@@ -1,11 +1,6 @@
 /* eslint-disable camelcase */
 async ({ accounts }) => {
-  const url = 'http://partnerfinance.test/api/data/';
   const method = 'balance';
-  const token = 'SVFEBZj4yQ';
-  const data = { api_token: token, accounts };
-
-  console.log(data);
 
   // const metacom = metarhia.metacom.Metacom.create(url);
   // console.log(metacom.ready());
@@ -21,15 +16,15 @@ async ({ accounts }) => {
 
   // return req;
   // req.end();
-  // console.log(res);
+  // console.log(config.ptfin);
 
-  const res = await metarhia.metautil.fetch(url + method, {
+  const res = await metarhia.metautil.fetch(config.ptfin.main.url + method, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       // , 'Accept-Encoding': 'deflate, gzip, br, zstd'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ api_token: config.ptfin.main.token, accounts }),
   });
 
   return res.json();
