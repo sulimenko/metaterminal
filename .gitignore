@@ -8,3 +8,4 @@ node_modules
 data/
 .idea/
 application/config/database.js
+application/config/alpaca.js
