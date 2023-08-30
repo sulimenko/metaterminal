@@ -20,6 +20,8 @@ async ({ account }) => {
 
   const wl = {
     U3154743: [
+      { symbol: 'BTCUSDT' },
+      { symbol: 'ETHUSDT' },
       { symbol: 'MRNA' },
       { symbol: 'AAPL' },
       { symbol: 'TSLA' },

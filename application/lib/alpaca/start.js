@@ -1,6 +1,6 @@
 async () => {
   for (const type of ['paper', 'main']) {
-    lib.alpaca.client.set({ key: type });
+    domain.marketData.alpacaClient.set({ key: type });
   }
   // await application.invoke({
   // method: 'lib.alpaca.connect',
@@ -11,9 +11,6 @@ async () => {
   // console.debug(lib.alpaca.client);
   // const client = lib.alpaca.client.get({ key: 'main' });
   // console.log(client);
-
-  // const alpaca = lib.alpaca.client.get({ key: 'main' });
-  // console.log(alpaca.newTimeframe(1, alpaca.timeframeUnit.HOUR));
 
   if (application.worker.id === 'W1') {
     console.debug('Connect to alpaca');

@@ -63,19 +63,19 @@
     return new Date().getTime();
   },
 
-  async get({ url }) {
-    return new Promise((resolve) => {
-      const protocol = url.indexOf('https:') === -1 ? node.http : node.https;
-      let body = '';
-
-      protocol.get(url, (res) => {
-        res.on('data', (chunk) => {
-          body += chunk;
-        });
-        res.on('end', () => {
-          resolve(body);
-        });
-      });
-    });
-  },
+  // async get({ url }) {
+  //   return new Promise((resolve) => {
+  //     const protocol = url.indexOf('https:') === -1 ? node.http : node.https;
+  //     let body = '';
+  //
+  //     protocol.get(url, (res) => {
+  //       res.on('data', (chunk) => {
+  //         body += chunk;
+  //       });
+  //       res.on('end', () => {
+  //         resolve(body);
+  //       });
+  //     });
+  //   });
+  // },
 });

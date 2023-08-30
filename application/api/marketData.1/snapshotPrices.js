@@ -5,7 +5,7 @@
   method: async (symbols) => {
     console.log('getApiPrice: ', symbols.join(','));
     const prices = [];
-    const alpaca = lib.alpaca.client.get({ key: 'main' });
+    const alpaca = domain.marketData.alpacaClient.get({ key: 'main' });
     // console.log(alpaca);
     for (const instrument of await alpaca.getSnapshots(symbols)) {
       //   console.log('instrument: ', instrument);
