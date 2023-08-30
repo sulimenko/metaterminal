@@ -12,6 +12,9 @@ async () => {
   // const client = lib.alpaca.client.get({ key: 'main' });
   // console.log(client);
 
+  // const alpaca = lib.alpaca.client.get({ key: 'main' });
+  // console.log(alpaca.newTimeframe(1, alpaca.timeframeUnit.HOUR));
+
   if (application.worker.id === 'W1') {
     console.debug('Connect to alpaca');
   }

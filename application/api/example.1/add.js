@@ -2,8 +2,8 @@
   access: 'public',
 
   parameters: {
-    a: 'number',
-    b: 'number',
+    a: 'string',
+    b: 'string',
   },
 
   method: async ({ a, b }) => {
@@ -15,7 +15,7 @@
     return result;
   },
 
-  returns: 'number',
+  returns: 'string',
 
   errors: {
     EARGA: 'Invalid argument: "a" expected to be > 0',
