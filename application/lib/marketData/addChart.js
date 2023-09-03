@@ -1,14 +1,13 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
-async ({ symbol, userId, period = '86400', limit = 100, client }) => {
+async ({ symbol, userId, period = '86400', limit = 100 }) => {
   // console.log(account, symbol, client);
   const exist = domain.marketData.charts.getChartSigner({ userId, period });
   const chartData = domain.marketData.charts.getChart({ symbol, period });
-  console.log('exist', exist, chartData);
+  // console.log('exist', exist, chartData);
 
   if (exist === null) {
     domain.marketData.tvClient.client.addChartSymbol({ symbol, period, limit });
-    domain.marketData.clients.setClient({ userId, client });
   } else if (exist.signers.size === 1) {
     domain.marketData.tvClient.client.updateChartSymbol({ symbol, period, limit, exist: { symbol: exist.symbol, period: exist.period } });
     exist.signers.delete(userId);

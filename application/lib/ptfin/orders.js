@@ -2,6 +2,7 @@
 async ({ accounts, days = 5 }) => {
   const method = 'orders';
 
+  console.log(config.ptfin.main.url + method, accounts, days);
   const res = await metarhia.metautil.fetch(config.ptfin.main.url + method, {
     method: 'POST',
     headers: {

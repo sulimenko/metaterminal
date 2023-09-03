@@ -5,7 +5,7 @@ async ({ account }) => {
   //   const method = 'watch_list';
   //   const token = 'SVFEBZj4yQ';
   //   const data = { api_token: token, account };
-  console.log(account);
+  console.log('watchList: ', account);
 
   //   const res = await metarhia.metautil.fetch(url + method, {
   //     method: 'POST',

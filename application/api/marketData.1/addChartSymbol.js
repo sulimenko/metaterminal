@@ -1,7 +1,7 @@
 ({
   access: 'private',
-  method: async ({ symbol, userId, period, limit }) => {
+  method: async ({ symbol, period, limit }) => {
     // console.log('addChartSymbol: ', symbol, period, limit);
-    return lib.marketData.addChart({ symbol, userId, period, limit, client: context.client });
+    return lib.marketData.addChart({ symbol, userId: context.client.session.state.user_id, period, limit });
   },
 });

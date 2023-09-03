@@ -2,6 +2,9 @@
 async ({ accounts }) => {
   const method = 'balance';
 
+  console.log('balances before', config.ptfin.main.url + method, accounts);
+  if (accounts.includes(null)) return [];
+  console.log('balances after', config.ptfin.main.url + method, accounts);
   // const metacom = metarhia.metacom.Metacom.create(url);
   // console.log(metacom.ready());
   // console.log(metarhia.metacom.Metacom.call(url));
@@ -16,7 +19,6 @@ async ({ accounts }) => {
 
   // return req;
   // req.end();
-  // console.log(config.ptfin);
 
   const res = await metarhia.metautil.fetch(config.ptfin.main.url + method, {
     method: 'POST',

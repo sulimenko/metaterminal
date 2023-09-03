@@ -1,4 +1,4 @@
-async ({ symbols, userId, client }) => {
+async ({ userId, symbols }) => {
   // console.log(account, symbols, client);
 
   symbols.forEach((symbol) => {
@@ -6,9 +6,6 @@ async ({ symbols, userId, client }) => {
     data.signers.add(userId);
     domain.marketData.quotes.values.set(symbol, data);
   });
-
-  domain.marketData.clients.setClient({ userId, client });
-  // if (!domain.marketData.source.tvClient) await domain.marketData.source.connect();
   domain.marketData.tvClient.client.addQuoteSymbols({ symbols });
 
   // if (symbol === '*') return this.list.get();
