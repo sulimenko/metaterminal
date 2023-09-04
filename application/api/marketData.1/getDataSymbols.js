@@ -1,9 +1,9 @@
 ({
   access: 'private',
-  method: async ({ symbols }) => {
+  method: ({ symbols }) => {
     const data = {};
     symbols.forEach((symbol) => {
-      data[symbol] = domain.marketData.source.symbols.get(symbol).data;
+      data[symbol] = domain.marketData.data.getData({ symbol }).data;
     });
     return data;
   },
