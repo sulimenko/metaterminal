@@ -30,8 +30,8 @@
     return db.pg.delete('terminal_tokens', { token });
   },
 
-  async registerUser(user_id, login, password) {
-    return db.pg.insert('terminal_users', { user_id, login, password });
+  async registerUser({ userId, login, password }) {
+    return db.pg.insert('terminal_users', { user_id: userId, login, password });
   },
 
   async getUser(login) {

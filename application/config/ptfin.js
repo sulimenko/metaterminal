@@ -1,6 +1,6 @@
 ({
   main: {
-    url: 'http://partnerfinance.test/api/data/',
+    url: 'http://127.0.0.1:8000/api/data/',
     token: 'SVFEBZj4yQ',
   },
 });
