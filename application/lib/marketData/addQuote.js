@@ -1,14 +1,17 @@
 async ({ userId, symbols }) => {
-  // console.log(account, symbols, client);
-
-  symbols.forEach((symbol) => {
-    const data = domain.marketData.quotes.getQuote({ symbol });
+  // console.log(userId, symbols);
+  const symbolsArray = [];
+  for (const key in symbols) {
+    // console.log(key);
+    const data = domain.marketData.quotes.getQuote({ symbol: symbols[key].symbol });
     data.signers.add(userId);
-    domain.marketData.quotes.values.set(symbol, data);
-  });
-  domain.marketData.tvClient.client.addQuoteSymbols({ symbols });
+    domain.marketData.quotes.values.set(symbols[key].symbol, data);
+    symbolsArray.push(symbols[key].source + ':' + symbols[key].symbol);
+  }
+  // console.log(symbolsArray);
+  domain.marketData.tvClient.client.addQuoteSymbols({ symbols: symbolsArray });
 
   // if (symbol === '*') return this.list.get();
   // return this.list.get(symbols);
-  return 'add ' + symbols.join(', ');
+  return 'add ' + symbolsArray.join(', ');
 };

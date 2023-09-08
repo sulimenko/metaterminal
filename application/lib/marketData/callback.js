@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-case-declarations */
 (name, packet) => {
   // console.info('result: ', packet);
-  const symbol = packet.symbol;
+  const [source, symbol] = packet.symbol.split(':');
+  packet.symbol = symbol;
+  packet.source = source;
+  // console.log(source, symbol, packet);
   // const source = domain.marketData.source.symbols.get(symbol);
   let chart = null;
   let quote = null;
