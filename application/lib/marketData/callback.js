@@ -6,13 +6,12 @@
   packet.symbol = symbol;
   packet.source = source;
   // console.log(source, symbol, packet);
-  // const source = domain.marketData.source.symbols.get(symbol);
   let chart = null;
   let quote = null;
   let data = null;
   switch (name) {
     case 'chart_history':
-      chart = domain.marketData.charts.getChart({ symbol, period: packet.period });
+      chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
       for (const userId of chart.full) {
         domain.marketData.clients.getClient({ userId }).emit('marketData/chart_history', [packet.chart, symbol, userId]);
         chart.full.delete(userId);
@@ -20,7 +19,7 @@
       domain.marketData.charts.setChart({ data: chart });
       break;
     case 'chart_update':
-      chart = domain.marketData.charts.getChart({ symbol, period: packet.period });
+      chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
       for (const userId of chart.signers) {
         domain.marketData.clients.getClient({ userId }).emit('marketData/chart_update', [packet.chart, symbol, userId]);
       }

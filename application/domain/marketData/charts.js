@@ -1,12 +1,18 @@
 ({
-  default: ({ symbol, period }) => {
-    return { symbol, period, data: {}, signers: new Set(), full: new Set() };
+  default: ({ instrument, period }) => {
+    return { symbol: instrument.symbol, source: instrument.source, period, data: {}, signers: new Set(), full: new Set() };
   },
   values: new Map(),
-  getChart({ symbol, period }) {
-    let data = this.values.get(symbol);
-    if (data === undefined) data = this.values.set(symbol, { [period]: this.default({ symbol, period }) }).get(symbol);
-    if (data[period] === undefined) data = this.values.set(symbol, { [period]: this.default({ symbol, period }) }).get(symbol);
+  getChart({ instrument, period }) {
+    let data = this.values.get(instrument.symbol);
+    if (data === undefined) {
+      data = { [period]: this.default({ instrument, period }) };
+      data = this.values.set(instrument.symbol, data).get(instrument.symbol);
+    }
+    if (data[period] === undefined) {
+      data[period] = this.default({ instrument, period });
+      data = this.values.set(instrument.symbol, data).get(instrument.symbol);
+    }
     return data[period];
   },
   getChartSigner({ userId }) {
