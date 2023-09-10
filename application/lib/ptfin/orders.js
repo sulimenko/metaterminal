@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 async ({ accounts, days = 5 }) => {
-  const method = 'orders';
-
+  const method = 'terminal_orders';
   console.log(config.ptfin.main.url + method, accounts, days);
+  if (accounts.includes(null)) return [];
+
   const res = await metarhia.metautil.fetch(config.ptfin.main.url + method, {
     method: 'POST',
     headers: {
