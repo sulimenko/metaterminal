@@ -9,3 +9,5 @@ data/
 .idea/
 application/config/database.js
 application/config/alpaca.js
+application/config/ptfin.js
+application/config/server.js

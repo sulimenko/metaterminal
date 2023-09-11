@@ -3,10 +3,12 @@
   access: 'public',
   method: async ({ login, password }) => {
     const user = await api.auth.provider.getUser(login);
-    if (!user) throw new Error('Incorrect login or password');
+    // if (!user) throw new Error('Incorrect login or password');
+    if (!user) return { status: 'unlogged', text: 'Incorrect login or password', token: null };
     const { user_id, password: hash } = user;
     const valid = await metarhia.metautil.validatePassword(password, hash);
-    if (!valid) throw new Error('Incorrect login or password');
+    // if (!valid) throw new Error('Incorrect login or password');
+    if (!valid) return { status: 'unlogged', text: 'Incorrect login or password', token: null };
     console.log(`Logged user: ${login}`);
     const token = api.auth.provider.generateToken();
     const data = { user_id: user.user_id };
@@ -14,6 +16,6 @@
     const { ip } = context.client;
     await api.auth.provider.createSession(token, data, { ip, user_id });
     domain.marketData.clients.setClient({ userId: context.client.session.state.user_id, client: context.client });
-    return { status: 'logged', token };
+    return { status: 'logged', text: 'Success', token };
   },
 });
