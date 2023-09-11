@@ -1,5 +1,5 @@
 ({
-  host: '0.0.0.0',
+  host: 'ptfin.kz',
   balancer: 8000,
   protocol: 'http',
   ports: [8001, 8002],

@@ -1,6 +1,6 @@
 ({
   main: {
-    url: 'http://partnerfinance.test/api/data/',
+    url: 'https://back.ptfin.ru/api/data/',
     token: 'SVFEBZj4yQ',
   },
 });
