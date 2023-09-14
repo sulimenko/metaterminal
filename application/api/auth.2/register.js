@@ -1,5 +1,5 @@
 ({
-  access: 'public',
+  access: 'private',
   method: async ({ userId, login, password }) => {
     const hash = await metarhia.metautil.hashPassword(password);
     await api.auth.provider.registerUser({ userId, login, hash });

@@ -8,7 +8,11 @@
     if (data) {
       context.client.startSession(token, data);
       // console.log('restore: ', context.client.session.state, JSON.stringify(context));
-      domain.marketData.clients.setClient({ userId: context.client.session.state.user_id, client: context.client });
+      domain.marketData.clients.setClient({
+        login: context.client.session.state.login,
+        userId: context.client.session.state.user_id,
+        client: context.client,
+      });
       return { status: 'logged' };
     }
     return { status: 'not logged' };

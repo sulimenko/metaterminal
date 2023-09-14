@@ -17,6 +17,7 @@
   async createSession(token, data, fields = {}) {
     const record = { token, data: JSON.stringify(data), ...fields };
     console.log({ createSession: record });
+    await db.pg.delete('terminal_tokens', { login: data.login });
     return db.pg.insert('terminal_tokens', record);
   },
 
@@ -30,8 +31,8 @@
     return db.pg.delete('terminal_tokens', { token });
   },
 
-  async registerUser({ userId, login, password }) {
-    return db.pg.insert('terminal_users', { user_id: userId, login, password });
+  async registerUser({ userId, login, hash }) {
+    return db.pg.insert('terminal_users', { user_id: userId, login, password: hash });
   },
 
   async getUser(login) {
