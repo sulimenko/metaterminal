@@ -4,7 +4,7 @@ async ({ login }) => {
   console.log(wl);
   if (wl.length > 0) return wl;
 
-  const wlDefault = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login: 'default' });
+  const wlDefault = await db.pg.select('terminal_wls', ['name', 'symbol', 'symbol_id', 'source', 'order'], { login: 'default' });
 
   for (const instrument of wlDefault) {
     await db.pg.insert('terminal_wls', {
