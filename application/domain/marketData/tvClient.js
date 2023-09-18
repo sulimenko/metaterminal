@@ -7,10 +7,11 @@
       this.client = new Client();
 
       status = await this.client.connect({
-        url: config.tradingview.main.url,
-        options: JSON.parse(config.tradingview.main.options),
-        login: config.tradingview.main.login,
-        pass: config.tradingview.main.pass,
+        url: config.marketdata.tradingView.url,
+        options: JSON.parse(config.marketdata.tradingView.options),
+        login: config.marketdata.tradingView.login,
+        pass: config.marketdata.tradingView.pass,
+        token: config.marketdata.tradingView.token,
         result: lib.marketData.callback,
       });
     }

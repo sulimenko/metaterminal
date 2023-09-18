@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 ({
-  access: 'private',
+  access: 'public',
   method: async () => {
     console.log('quotes: ', domain.marketData.quotes.values);
     console.log('data: ', domain.marketData.data.values);
