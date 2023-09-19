@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-async ({ login }) => {
-  const wl = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login }).order('order');
-  console.log(wl);
+async ({ login, name }) => {
+  const wl = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login, name }).order('order');
+  // console.log(wl);
   if (wl.length > 0) return wl;
 
   const wlDefault = await db.pg.select('terminal_wls', ['name', 'symbol', 'symbol_id', 'source', 'order'], { login: 'default' });
