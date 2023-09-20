@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 async ({ order }) => {
-  const method = 'delete_order';
+  const method = 'cancel_order';
 
   console.log('deleteOrder: ', config.ptfin.main.url + method, order);
 
