@@ -2,8 +2,9 @@
 ({
   access: 'private',
   method: async ({ data }) => {
-    console.log('metacom sendOrder', data);
-    // return lib.ptfin({ accounts });
+    // console.log('metacom sendOrder', data);
+    data.user = context.client.session.state.user_id;
+    return lib.ptfin.sendOrder({ data });
   },
 });
 
