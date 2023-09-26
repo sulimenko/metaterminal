@@ -1,5 +1,5 @@
 ({
-  access: 'private',
+  access: 'public',
   method: ({ symbols }) => {
     const data = {};
     for (const symbol of symbols) {
