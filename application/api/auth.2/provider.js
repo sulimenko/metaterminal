@@ -38,4 +38,10 @@
   async getUser(login) {
     return db.pg.row('terminal_users', { login });
   },
+
+  async updatePassword({ user_id, password }) {
+    const hash = await metarhia.metautil.hashPassword(password);
+    // console.log('resetPass', user_id, hash);
+    await db.pg.update('terminal_users', { password: hash }, { user_id });
+  },
 });
