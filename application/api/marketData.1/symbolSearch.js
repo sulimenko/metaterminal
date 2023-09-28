@@ -7,6 +7,11 @@
     });
     // return haystack.json();
     const json = await haystack.json();
-    return json.filter((each) => ['NASDAQ', 'NYSE', 'AMEX', 'OTC', 'LSE', 'LSEIOB1', 'COINBASE'].includes(each.prefix || each.exchange));
+    const list = json.filter((each) =>
+      ['NASDAQ', 'NYSE', 'AMEX', 'OTC', 'LSE', 'LSEIOB1', 'COINBASE'].includes(each.prefix || each.exchange),
+    );
+    for (const each of list) each.source = each.prefix !== undefined ? each.prefix : each.exchange;
+    // console.log(list);
+    return list;
   },
 });
