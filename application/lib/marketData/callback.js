@@ -37,6 +37,9 @@
       Object.keys(packet).forEach((key) => (data.data[key] = packet[key]));
       domain.marketData.data.values.set(symbol, data);
       break;
+    case 'error':
+      lib.marketData.processingError({ error: packet });
+      break;
     default:
       console.log({ errorPacket: packet });
   }

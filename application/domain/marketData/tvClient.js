@@ -17,4 +17,9 @@
     }
     return status;
   },
+  close() {
+    this.client.close();
+    this.client = null;
+    return;
+  },
 });
