@@ -11,8 +11,10 @@
     this.values.clear();
     domain.marketData.tvClient.close();
     setTimeout(async () => {
-      await domain.marketData.tvClient.connect();
-      setTimeout(() => {
+      domain.marketData.tvClient.client = null;
+      const status = await domain.marketData.tvClient.connect();
+      console.log('restart: ', status);
+      if (status === 'open') {
         const quoteArray = [];
         for (const each of domain.marketData.data.values.values()) {
           quoteArray.push(each.data.source + ':' + each.data.symbol);
@@ -32,7 +34,7 @@
             }
           }
         }
-      }, 1000);
+      }
     }, 500);
     return;
   },
