@@ -11,7 +11,7 @@ async ({ login, name, instrument }) => {
     name,
     symbol: instrument.symbol,
     // symbol_id: instrument.symbol_id,
-    source: instrument.exchange,
+    source: instrument.prefix !== undefined ? instrument.prefix : instrument.exchange,
     order: wl.length,
     created_at: new Date(),
     updated_at: new Date(),
