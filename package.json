@@ -40,10 +40,10 @@
   },
   "dependencies": {
     "@alpacahq/alpaca-trade-api": "^3.0.1",
-    "impress": "^3.0.12",
-    "market-data-tradingview-ws": "^0.0.8",
+    "impress": "^3.0.13",
+    "market-data-tradingview-ws": "^0.0.9",
     "metasql": "^3.0.0-alpha.2",
     "pg": "^8.11.1",
-    "redis": "^4.6.5"
+    "redis": "^4.6.10"
   }
 }
