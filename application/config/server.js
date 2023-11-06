@@ -1,7 +1,7 @@
 ({
   host: process.env.host || '0.0.0.0',
   balancer: 8000,
-  protocol: process.env.protocol || 'https',
+  protocol: process.env.protocol || 'http',
   ports: [8001, 8002],
   nagle: false,
   timeouts: {

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 ({
   access: 'private',
   method: async ({ oldPassword, newPassword }) => {
