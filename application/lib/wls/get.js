@@ -2,6 +2,11 @@
 async ({ login, name }) => {
   const wl = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login, name }).order('order');
   // console.log(wl);
+  for (const each of wl) {
+    each.instrument = await db.pg.row('instruments', ['symbol', 'asset_category', 'listing_exchange', 'multiplier', 'underlying_symbol'], {
+      symbol: each.symbol,
+    });
+  }
   if (wl.length > 0) return wl;
 
   const wlDefault = await db.pg.select('terminal_wls', ['name', 'symbol', 'symbol_id', 'source', 'order'], { login: 'default' });

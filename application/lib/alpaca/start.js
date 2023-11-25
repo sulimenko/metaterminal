@@ -1,7 +1,10 @@
 async () => {
-  // for (const type of ['paper', 'main']) {
-  // domain.marketData.alpacaClient.set({ key: type });
-  // }
+  if (application.worker.id === 'W2') {
+    for (const type of ['paper', 'main']) {
+      domain.marketData.alpacaClient.set({ key: type });
+      console.debug('Connect to alpaca: ', type);
+    }
+  }
   // await application.invoke({
   // method: 'lib.alpaca.connect',
   // args: {},
@@ -10,9 +13,6 @@ async () => {
   // console.debug(lib.alpaca.client);
   // const client = lib.alpaca.client.get({ key: 'main' });
   // console.log(client);
-  // if (application.worker.id === 'W1') {
-  //   console.debug('Connect to alpaca');
-  // }
   // if (application.worker.id === 'W1') {
   //   // console.log('alpaca', lib.alpaca);
   //   lib.alpaca.main.data_stream_v2.onConnect(function () {
