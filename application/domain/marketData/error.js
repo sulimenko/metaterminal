@@ -16,10 +16,10 @@
       console.log('restart: ', status);
       if (status === 'open') {
         const quoteArray = [];
-        for (const each of domain.marketData.data.values.values()) {
-          quoteArray.push(each.data.source + ':' + each.data.symbol);
+        for (const each of domain.marketData.quotes.values.values()) {
+          if (each.data.source !== undefined && each.data.symbol !== undefined) quoteArray.push(each.data.source + ':' + each.data.symbol);
         }
-        console.log('quoteArray: ', quoteArray);
+        console.warn('quoteArray: ', quoteArray);
         domain.marketData.tvClient.client.addQuoteSymbols({ symbols: quoteArray });
 
         for (const each of domain.marketData.charts.values.values()) {
