@@ -6,7 +6,10 @@
     // console.log(login, password, user);
     // if (!user) throw new Error('Incorrect login or password');
     if (!user) return { status: 'unlogged', text: 'Incorrect login or password', token: null };
-    if (user.type === 'alpaca') return { status: 'external', text: user.type, token: null };
+    if (user.type === 'alpaca') {
+      const refreshToken = await api.auth.provider.getRefreshToken(user.login);
+      return { status: 'external', text: user.type, refreshToken };
+    }
     const { user_id, password: hash } = user;
     const valid = await metarhia.metautil.validatePassword(password, hash);
     // if (!valid) throw new Error('Incorrect login or password');

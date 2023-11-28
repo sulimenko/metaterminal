@@ -27,6 +27,12 @@
     return null;
   },
 
+  async getRefreshToken(login) {
+    const record = await db.pg.row('terminal_tokens', ['token'], { login, type: 'refreshToken' });
+    if (record && record.token) return record.token;
+    return null;
+  },
+
   async deleteSession(token) {
     return db.pg.delete('terminal_tokens', { token });
   },
