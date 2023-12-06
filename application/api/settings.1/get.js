@@ -1,6 +1,6 @@
 ({
   access: 'private',
-  method: async () => {
-    return lib.settings.get({ login: context.session.state.login });
+  method: async ({ type }) => {
+    return lib.settings.get({ login: context.session.state.login, type });
   },
 });
