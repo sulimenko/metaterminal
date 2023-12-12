@@ -2,7 +2,9 @@
 ({
   access: 'public',
   method: async () => {
-    console.warn('charts: ', domain.marketData.charts.values);
-    return 'ok';
+    for (const [key, value] of domain.marketData.charts.values.entries()) {
+      console.warn(key, value);
+    }
+    return 'OK';
   },
 });

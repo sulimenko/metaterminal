@@ -1,19 +1,31 @@
 ({
   default: ({ instrument, period }) => {
-    return { symbol: instrument.symbol, source: instrument.source, period, data: {}, signers: new Set(), full: new Set() };
+    return {
+      symbol: instrument.symbol,
+      source: instrument.source,
+      period,
+      data: { full: [], last: {} },
+      signers: new Set(),
+      // full: new Set(),
+    };
   },
   values: new Map(),
-  getChart({ instrument, period }) {
+  setChart({ data }) {
+    this.values.set(data.symbol, { [data.period.toString()]: data });
+  },
+  getSymbol({ instrument }) {
     let data = this.values.get(instrument.symbol);
-    if (data === undefined) {
-      data = { [period]: this.default({ instrument, period }) };
-      data = this.values.set(instrument.symbol, data).get(instrument.symbol);
+    if (data === undefined) data = this.values.set(instrument.symbol, {}).get(instrument.symbol);
+    return data;
+  },
+  getChart({ instrument, period }) {
+    let chart = this.getSymbol({ instrument, period });
+    if (chart[period] === undefined) {
+      chart[period] = this.default({ instrument, period });
+      this.values.set(instrument.symbol, chart);
+      chart = this.getSymbol({ instrument, period });
     }
-    if (data[period] === undefined) {
-      data[period] = this.default({ instrument, period });
-      data = this.values.set(instrument.symbol, data).get(instrument.symbol);
-    }
-    return data[period];
+    return chart[period];
   },
   getChartSigner({ userId }) {
     for (const [key, value] of this.values.entries()) {
@@ -24,8 +36,5 @@
       }
     }
     return null;
-  },
-  setChart({ data }) {
-    this.values.set(data.symbol, { [data.period.toString()]: data });
   },
 });
