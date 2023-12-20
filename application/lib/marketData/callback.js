@@ -49,7 +49,9 @@
       case 'levelI':
         quote = domain.marketData.quotes.getQuote({ symbol });
         for (const userId of quote.signers) {
-          domain.marketData.clients.getClient({ userId }).emit('marketData/quote', quote.data);
+          let client = domain.marketData.clients.getClient({ userId });
+          if (client) client.emit('marketData/quote', quote.data);
+          client = null;
         }
         Object.keys(packet).forEach((key) => (quote.data[key] = packet[key]));
         domain.marketData.quotes.values.set(symbol, quote);
