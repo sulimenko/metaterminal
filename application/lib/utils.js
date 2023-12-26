@@ -63,6 +63,12 @@
     return new Date().getTime();
   },
 
+  async wait(delay) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve('done'), delay);
+    });
+  },
+
   // async get({ url }) {
   //   return new Promise((resolve) => {
   //     const protocol = url.indexOf('https:') === -1 ? node.http : node.https;
