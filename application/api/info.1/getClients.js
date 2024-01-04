@@ -2,7 +2,9 @@
 ({
   access: 'public',
   method: async () => {
-    console.warn('quotes: ', domain.marketData.clients.values);
+    for (const [key, value] of domain.marketData.clients.values) {
+      console.warn(value.session.state, value);
+    }
     return 'ok';
   },
 });
