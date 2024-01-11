@@ -30,27 +30,7 @@
     return value * 10 ** exp;
   },
 
-  alpacaConnect(keys) {
-    return lib.alpaca.new({
-      keyId: keys.pkey,
-      secretKey: keys.secret,
-      paper: keys.live !== undefined ? !keys.live : true, // true, false
-      feed: 'iex', // 'iex', 'sip'
-    });
-  },
-
   makeResult(command, data) {
-    // return {
-    //   command: command ? command : 'empty',
-    //   result: {
-    //     data: data ? data : {},
-    //     error: { status: false, list: [] },
-    //     end: false,
-    //     time: { start: this.getMilliseconds(), end: null },
-    //   },
-    //   error: false,
-    //   errorText: '',
-    // };
     return {
       command: command ? command : 'empty',
       data: data ? data : {},
@@ -67,6 +47,38 @@
     return new Promise((resolve) => {
       setTimeout(() => resolve('done'), delay);
     });
+  },
+
+  microtime() {
+    return new Date().getTime() / 1000;
+  },
+
+  preSign(req) {
+    const r = [];
+    for (const key of Object.keys(req).sort()) {
+      if (Array.isArray(req[key])) req[key] = this.preSign(req[key]);
+      r.push(key + '=' + req[key]);
+    }
+    return r.join('&');
+  },
+
+  hmacHash(algorithm, key, data) {
+    const hmac = node.crypto.createHmac(algorithm, key);
+    hmac.update(data);
+    return hmac.digest('hex');
+  },
+
+  parseCookie(str) {
+    // console.log(str);
+    return str !== null
+      ? str
+          .split(';')
+          .map((v) => v.split('='))
+          .reduce((acc, v) => {
+            if (v[0] && v[1]) acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+            return acc;
+          }, {})
+      : {};
   },
 
   // async get({ url }) {

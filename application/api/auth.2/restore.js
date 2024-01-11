@@ -8,7 +8,7 @@
     if (data) {
       context.client.startSession(token, data);
       // console.log('restore: ', context.client.session.state, JSON.stringify(context));
-      domain.marketData.clients.setClient({
+      domain.clients.terminal.setClient({
         login: context.client.session.state.login,
         userId: context.client.session.state.user_id,
         client: context.client,

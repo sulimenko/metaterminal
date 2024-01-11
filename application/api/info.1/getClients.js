@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async () => {
-    for (const [key, value] of domain.marketData.clients.values) {
+    for (const [key, value] of domain.clients.terminal.values) {
       console.warn(value.session.state, value);
     }
     return 'ok';

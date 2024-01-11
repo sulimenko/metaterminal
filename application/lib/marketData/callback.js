@@ -39,7 +39,7 @@
       case 'chart_update':
         chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
         for (const userId of chart.signers) {
-          domain.marketData.clients
+          domain.clients.terminal
             .getClient({ userId })
             .emit('marketData/chart_update', { chart: { last: packet.chart[0] }, symbol, userId });
         }
@@ -49,7 +49,7 @@
       case 'levelI':
         quote = domain.marketData.quotes.getQuote({ symbol });
         for (const userId of quote.signers) {
-          let client = domain.marketData.clients.getClient({ userId });
+          let client = domain.clients.terminal.getClient({ userId });
           if (client) client.emit('marketData/quote', quote.data);
           client = null;
         }

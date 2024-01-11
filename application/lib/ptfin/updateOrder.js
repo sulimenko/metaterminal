@@ -1,6 +1,6 @@
 async ({ update }) => {
-  for (const client of domain.marketData.clients.getByAccount({ account: update.account })) {
+  for (const client of domain.clients.terminal.getByAccount({ account: update.account })) {
     client.emit('ptfin/updateOrder', update);
   }
-  console.log(update);
+  // console.log(update);
 };

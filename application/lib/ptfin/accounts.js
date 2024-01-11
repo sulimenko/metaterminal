@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 async ({ userId }) => {
-  const method = 'accounts';
+  const method = 'data/accounts';
 
   if (!userId) return {};
   const res = await metarhia.metautil.fetch(config.ptfin.main.url + method, {

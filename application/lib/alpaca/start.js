@@ -1,10 +1,10 @@
 async () => {
-  if (application.worker.id === 'W2') {
-    for (const type of ['paper', 'main']) {
-      domain.marketData.alpacaClient.set({ key: type });
-      console.debug('Connect to alpaca: ', type);
-    }
-  }
+  // if (application.worker.id === 'W2') {
+  //   for (const type of ['paper', 'main']) {
+  //     domain.clients.alpaca.set({ key: type });
+  //     console.debug('Connect to alpaca: ', type);
+  //   }
+  // }
   // await application.invoke({
   // method: 'lib.alpaca.connect',
   // args: {},

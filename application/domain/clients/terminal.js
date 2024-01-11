@@ -1,5 +1,8 @@
 ({
   values: new Map(),
+  setClient({ userId, client }) {
+    return this.values.set(userId, client);
+  },
   getClient({ userId }) {
     let data = this.values.get(userId);
     if (data === undefined) data = this.values.set(userId, null).get(userId);
@@ -13,8 +16,5 @@
       if (value.session.state.accounts.includes(account)) clients.push(value);
     }
     return clients;
-  },
-  setClient({ userId, client }) {
-    return this.values.set(userId, client);
   },
 });
