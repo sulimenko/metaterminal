@@ -13,6 +13,6 @@ async ({ data, instrument }) => {
     })
     .then((res) => (res.status === 200 ? res.json() : res.text()));
 
-  console.warn('tn sendOrder: ', JSON.stringify(result));
+  console.warn('ptfin sendOrder: ', JSON.stringify(result));
   return result;
 };

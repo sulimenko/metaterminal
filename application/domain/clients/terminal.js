@@ -13,7 +13,9 @@
     // console.warn('getByAccount: ', account, this.values);
     // eslint-disable-next-line no-unused-vars
     for (const [key, value] of this.values) {
-      if (value.session.state.accounts.includes(account)) clients.push(value);
+      // console.warn('getByAccount: ', account, value.session.state, value);
+      if (value.session.state.accounts && Array.isArray(value.session.state.accounts) && value.session.state.accounts.includes(account))
+        clients.push(value);
     }
     return clients;
   },
