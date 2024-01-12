@@ -1,7 +1,7 @@
 async () => {
   // if (application.worker.id === 'W2') {
   //   for (const type of ['paper', 'main']) {
-  //     domain.clients.alpaca.set({ key: type });
+  //     domain.clients.alpaca.setClient({ key: type });
   //     console.debug('Connect to alpaca: ', type);
   //   }
   // }

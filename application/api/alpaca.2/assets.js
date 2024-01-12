@@ -7,7 +7,7 @@
     const responce = lib.utils.makeResult('assets', { samples: [] });
 
     if (symbol) {
-      responce.data.samples = await domain.clients.alpaca.get({ key: 'main' }).getAsset(symbol);
+      responce.data.samples = await domain.clients.alpaca.getClient({ key: 'main' }).getAsset(symbol);
       return responce;
     }
 
@@ -15,7 +15,7 @@
     const asset_class = type !== undefined && ['us_equity', 'crypto'].includes(type) ? type : undefined;
     // console.info(status, asset_class, responce);
 
-    responce.data.samples = await domain.clients.alpaca.get({ key: 'main' }).getAssets({
+    responce.data.samples = await domain.clients.alpaca.getClient({ key: 'main' }).getAssets({
       status,
       asset_class,
     });

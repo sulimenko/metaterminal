@@ -1,7 +1,7 @@
 async () => {
   if (application.worker.id !== 'W2') return;
   // for (const type of ['paper', 'main']) {
-  //   domain.clients.alpaca.set({ key: type });
+  //   domain.clients.alpaca.setClient({ key: type });
   // }
   const status = await domain.marketData.tvClient.connect();
 
