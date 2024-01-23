@@ -48,12 +48,13 @@
         break;
       case 'levelI':
         quote = domain.marketData.quotes.getQuote({ symbol });
+        // console.log(packet, quote.data, quote);
+        Object.keys(packet).forEach((key) => (quote.data[key] = packet[key]));
         for (const userId of quote.signers) {
           let client = domain.clients.terminal.getClient({ userId });
           if (client) client.emit('marketData/quote', quote.data);
           client = null;
         }
-        Object.keys(packet).forEach((key) => (quote.data[key] = packet[key]));
         domain.marketData.quotes.values.set(symbol, quote);
         break;
       case 'data':
