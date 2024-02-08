@@ -1,9 +1,9 @@
 ({
   access: 'public',
-  method: ({ symbols }) => {
+  method: async ({ symbols }) => {
     const data = {};
     for (const symbol of symbols) {
-      data[symbol] = domain.marketData.data.getData({ symbol }).data;
+      data[symbol] = await domain.marketData.data.getData({ symbol }).data;
     }
     return data;
   },

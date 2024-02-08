@@ -34,6 +34,8 @@ async ({ sid, account }) => {
 
     client.onclose = function (e) {
       console.error('sockets closed', e);
+      // Попробуем подключиться через 2 секунд после разрыва
+      setTimeout(() => domain.clients.tn.getClient({ keys: { name: '1185789' } }), 2000);
     };
 
     client.onerror = function (error) {
