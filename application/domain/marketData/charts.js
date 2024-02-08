@@ -21,7 +21,7 @@
   getChart({ instrument, period }) {
     // console.log('getChart: ', instrument, period);
     let chart = this.getSymbol({ instrument });
-    console.log('getChart exist: ', chart);
+    // console.log('getChart exist: ', chart);
     if (chart[period] === undefined) {
       chart[period] = this.default({ instrument, period });
       // console.log('getChart default: ', chart);
