@@ -12,10 +12,7 @@ async ({ sid, account }) => {
     });
     client.onopen = function () {
       console.log('onopen');
-      setInterval(() => { 
-        client.ping();
-        console.warn('send PING');
-      }, 5000);
+      setInterval(() => (client.ping(), console.warn('send PING')), 30000);
       // client.send(JSON.stringify(['orderBook', ['AAPL.US', 'TSLA.US']]));
       client.send(JSON.stringify(['session']));
       client.send(JSON.stringify(['orders']));
@@ -35,8 +32,8 @@ async ({ sid, account }) => {
         }
       }
     };
-    
-    client.on('pong', () => console.warn('Получен PONG') );
+
+    client.on('pong', () => console.warn('Получен PONG'));
 
     client.onclose = function (e) {
       console.error('sockets closed', e);

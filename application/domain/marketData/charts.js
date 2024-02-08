@@ -19,12 +19,17 @@
     return data;
   },
   getChart({ instrument, period }) {
-    let chart = this.getSymbol({ instrument, period });
+    // console.log('getChart: ', instrument, period);
+    let chart = this.getSymbol({ instrument });
+    console.log('getChart exist: ', chart);
     if (chart[period] === undefined) {
       chart[period] = this.default({ instrument, period });
+      // console.log('getChart default: ', chart);
       this.values.set(instrument.symbol, chart);
-      chart = this.getSymbol({ instrument, period });
+      chart = this.getSymbol({ instrument });
+      // console.log('getChart ALL: ', chart);
     }
+    // console.log('getChart return: ', period, chart[period]);
     return chart[period];
   },
   getChartSigner({ userId }) {
