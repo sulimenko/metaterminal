@@ -33,10 +33,11 @@ async ({ sid, account }) => {
       }
     };
 
-    client.on('pong', () => console.warn('Получен PONG'));
+    client.on('pong', () => console.warn('get PONG'));
 
     client.onclose = function (e) {
       console.error('sockets closed', e);
+      domain.clients.tn.deleteClient({ name: account });
       // Попробуем подключиться через 2 секунд после разрыва
       setTimeout(() => domain.clients.tn.getClient({ keys: { name: account } }), 2000);
     };

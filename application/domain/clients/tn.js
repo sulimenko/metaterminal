@@ -1,5 +1,8 @@
 ({
   values: new Map(),
+  deleteClient({ name }) {
+    this.values.delete(name);
+  },
   async setClient({ keys }) {
     let client = [];
     if (process.env.env === 'prod') {
