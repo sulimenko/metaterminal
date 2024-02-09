@@ -7,12 +7,14 @@ async ({ sid, account }) => {
   // console.log(url);
 
   return new Promise((resolve) => {
+    let ping = 0;
     client.on('connect', function () {
       console.log('connect');
     });
+
     client.onopen = function () {
       console.log('onopen');
-      setInterval(() => (client.ping(), console.warn('send PING')), 30000);
+      ping = setInterval(() => (client.ping(), console.warn('send PING')), 30000);
       // client.send(JSON.stringify(['orderBook', ['AAPL.US', 'TSLA.US']]));
       client.send(JSON.stringify(['session']));
       client.send(JSON.stringify(['orders']));
@@ -37,6 +39,7 @@ async ({ sid, account }) => {
 
     client.onclose = function (e) {
       console.error('sockets closed', e);
+      clearInterval(ping);
       domain.clients.tn.deleteClient({ name: account });
       // Попробуем подключиться через 2 секунд после разрыва
       setTimeout(() => domain.clients.tn.getClient({ keys: { name: account } }), 2000);
