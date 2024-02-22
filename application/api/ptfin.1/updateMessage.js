@@ -1,9 +1,9 @@
 ({
   access: 'public',
-  method: async (message) => {
-    // console.warn(message);
-    if (message.type === 'order') {
-      lib.ptfin.updateOrder({ update: message });
+  method: async (data) => {
+    // console.warn(data);
+    if (data.type === 'order') {
+      lib.ptfin.updateOrder({ update: data });
     }
     return 'OK';
   },
