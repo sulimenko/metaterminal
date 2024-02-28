@@ -24,5 +24,5 @@ async ({ instrument, userId, period = 3600, limit = 1000 }) => {
     }
   }
 
-  return lib.marketData.responceFull(userId, newSub);
+  return lib.marketData.responceFull(userId, newSub, new Date().getTime() + 1000);
 };
