@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 async (event) => {
-  // console.warn('tn updateStatus check orders_id: ', JSON.stringify(event.orders.map((each) => each.id)));
+  console.warn('tn updateStatus sent orders_id: ', JSON.stringify(event.orders.map((each) => each.id)));
   const method = 'tn/response';
   const data = { data: { command: 'orderStatus', account: event.account, orders: event.orders } };
   // const result = await metarhia.metautil
@@ -17,6 +17,6 @@ async (event) => {
   //   })
   //   .then((res) => (res.status === 200 ? res.json() : res.text()));
   const result = lib.ptfin.sendPost({ method, data });
-  console.warn('tn updateStatus check orders_id: ', JSON.stringify(result));
+  console.warn('tn updateStatus result: ', JSON.stringify(result));
   return result;
 };
