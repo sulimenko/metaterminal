@@ -1,7 +1,7 @@
 async ({ instrument, userId, period = 3600, limit = 1000 }) => {
   const existSub = domain.marketData.charts.getChartSigner({ userId });
   const newSub = domain.marketData.charts.getChart({ instrument, period });
-  console.log('exist', period, typeof period, existSub, newSub);
+  // console.log('exist', period, typeof period, existSub, newSub);
 
   if (['OPT', 'FUT'].includes(instrument.asset_category)) return 'Error. Unsupported: chart: ' + instrument.symbol + ', period: ' + period;
 
