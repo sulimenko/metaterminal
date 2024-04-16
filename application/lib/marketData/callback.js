@@ -44,7 +44,7 @@
             .emit('marketData/chart_update', { chart: { last: packet.chart[0] }, symbol, userId });
         }
         chart.data.last = packet.chart[0];
-        // console.log('chart_update: ', chart.data.last);
+        // console.log('chart_update: ', packet.chart, chart.data.last);
         break;
       case 'levelI':
         quote = domain.marketData.quotes.getQuote({ symbol });

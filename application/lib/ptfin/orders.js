@@ -1,16 +1,9 @@
 /* eslint-disable camelcase */
 async ({ accounts, days = 5 }) => {
-  const method = 'terminal/orders';
-  // console.log(config.ptfin.main.url + method, accounts, days);
   if (accounts.includes(null)) return [];
+  const method = 'terminal/orders';
+  const data = { accounts, days };
+  // console.log(config.ptfin.main.url + method, accounts, days);
 
-  const res = await metarhia.metautil.fetch(config.ptfin.main.url + method, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ api_token: config.ptfin.main.token, accounts, days }),
-  });
-
-  return res.json();
+  return lib.ptfin.sendPost({ method, data });
 };
