@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 async ({ userId }) => {
   if (!userId) return {};
   const method = 'data/accounts';

@@ -14,7 +14,7 @@ async ({ sid, account }) => {
 
     client.onopen = function () {
       console.log('onopen');
-      ping = setInterval(() => (client.ping(), console.warn('send PING ', account)), 30000);
+      ping = setInterval(() => (client.ping(), console.warn('send PING', account)), 30000);
       // client.send(JSON.stringify(['orderBook', ['AAPL.US', 'TSLA.US']]));
       client.send(JSON.stringify(['session']));
       client.send(JSON.stringify(['orders']));
@@ -30,12 +30,12 @@ async ({ sid, account }) => {
           lib.tn.updateStatus({ account, orders: messageData });
           // } else if (event === 'b') {}
         } else {
-          console.warn(event, messageData);
+          console.warn(account, event, messageData);
         }
       }
     };
 
-    client.on('pong', () => console.warn('get PONG ', account));
+    client.on('pong', () => console.warn('get PONG', account));
 
     client.onclose = function (e) {
       console.error('sockets closed', 'code:', e.code);
@@ -43,7 +43,7 @@ async ({ sid, account }) => {
       clearInterval(ping);
       domain.clients.tn.deleteClient({ name: account });
       // Попробуем подключиться через 2 секунд после разрыва
-      setTimeout(() => domain.clients.tn.getClient({ keys: { name: account } }), 2000);
+      setTimeout(() => domain.clients.tn.getClient({ account }), 2000);
     };
 
     client.onerror = function (error) {
