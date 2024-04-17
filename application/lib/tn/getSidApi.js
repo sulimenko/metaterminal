@@ -3,6 +3,7 @@ async (account) => {
   const data = { account };
 
   const result = await lib.ptfin.sendPost({ method, data });
+  console.log('getSidApi', result);
   return result.SID;
 
   // const data = { cmd: 'getAuthInfo', apiKey: keys.pkey, nonce: lib.utils.microtime() * 10000 };
