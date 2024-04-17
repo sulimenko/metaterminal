@@ -1,22 +1,21 @@
 ({
   values: new Map(),
-  deleteClient({ name }) {
-    this.values.delete(name);
+  deleteClient(account) {
+    this.values.delete(account);
   },
-  async setClient({ keys }) {
+  async setClient(account) {
     let client = null;
     // if (process.env.env === 'prod') {
     // const login = config.ffin[keys.name];
     // const sid = login !== undefined ? await lib.tn.getSidLogin({ keys: login }) : await await lib.tn.getSidApi({ keys });
-    const sid = await await lib.tn.getSidApi({ keys });
-    client = await lib.tn.new({ sid, account: keys.name });
-    // console.warn('readyState: ', client.readyState);
+    const sid = await await lib.tn.getSidApi(account);
+    client = await lib.tn.new({ sid, account });
     // }
-    return this.values.set(keys.name, client).get(keys.name);
+    return this.values.set(account, client).get(account);
   },
-  async getClient({ keys }) {
-    let client = this.values.get(keys.name);
-    if (!client) client = await this.setClient({ keys });
+  async getClient(account) {
+    let client = this.values.get(account);
+    if (!client) client = await this.setClient(account);
     return client;
   },
 });

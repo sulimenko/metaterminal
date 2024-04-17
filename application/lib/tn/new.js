@@ -2,9 +2,7 @@
 async ({ sid, account }) => {
   const WebSocket = npm.ws;
   const url = 'wss://wss.tradernet.com?SID=' + sid;
-  // const url = 'wss://wss.tradernet.com/?user_id=3060837';
   const client = new WebSocket(url);
-  // console.log(url);
 
   return new Promise((resolve) => {
     let ping = 0;
@@ -13,11 +11,11 @@ async ({ sid, account }) => {
     });
 
     client.onopen = function () {
-      console.log('onopen');
+      console.log('onopen ws', account);
       ping = setInterval(() => (client.ping(), console.warn('send PING', account)), 30000);
-      // client.send(JSON.stringify(['orderBook', ['AAPL.US', 'TSLA.US']]));
       client.send(JSON.stringify(['session']));
       client.send(JSON.stringify(['orders']));
+      // client.send(JSON.stringify(['orderBook', ['AAPL.US', 'TSLA.US']]));
       // client.send(JSON.stringify(['portfolio']));
       resolve(client);
     };
@@ -41,9 +39,9 @@ async ({ sid, account }) => {
       console.error('sockets closed', 'code:', e.code);
       console.error('clean:', e.wasCleane, 'reason:', e.reason);
       clearInterval(ping);
-      domain.clients.tn.deleteClient({ name: account });
+      domain.clients.tn.deleteClient(account);
       // Попробуем подключиться через 2 секунд после разрыва
-      setTimeout(() => domain.clients.tn.getClient({ account }), 2000);
+      setTimeout(() => domain.clients.tn.getClient(account), 2000);
     };
 
     client.onerror = function (error) {

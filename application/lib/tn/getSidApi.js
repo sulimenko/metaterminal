@@ -1,6 +1,6 @@
-async ({ keys }) => {
+async (account) => {
   const method = 'terminal/get_sid';
-  const data = { account: keys.name };
+  const data = { account };
 
   const result = await lib.ptfin.sendPost({ method, data });
   return result.SID;
