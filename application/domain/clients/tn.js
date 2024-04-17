@@ -6,12 +6,12 @@
   },
   async setClient(account) {
     let client = null;
-    // if (process.env.env === 'prod') {
-    // const login = config.ffin[keys.name];
-    // const sid = login !== undefined ? await lib.tn.getSidLogin({ keys: login }) : await await lib.tn.getSidApi({ keys });
-    const sid = await lib.tn.getSidApi(account);
-    client = await lib.tn.new({ sid, account });
-    // }
+    if (process.env.env === 'prod') {
+      // const login = config.ffin[keys.name];
+      // const sid = login !== undefined ? await lib.tn.getSidLogin({ keys: login }) : await await lib.tn.getSidApi({ keys });
+      const sid = await lib.tn.getSidApi(account);
+      client = await lib.tn.new({ sid, account });
+    }
     return this.values.set(account, client).get(account);
   },
   async getClient(account, update = false) {

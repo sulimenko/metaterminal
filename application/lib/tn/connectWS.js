@@ -4,4 +4,5 @@ async (update = false) => {
     const client = await domain.clients.tn.getClient(each.name, update);
     console.log('start tn:', each.name, client?.readyState || client);
   }
+  return 'finish';
 };
