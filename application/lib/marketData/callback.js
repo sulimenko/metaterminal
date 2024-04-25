@@ -3,6 +3,11 @@
   // console.info('result: ', packet);
   if (name === 'error') {
     lib.marketData.processingError({ error: packet });
+  } else if (['session', 'series', 'symbol', 'quote'].includes(name)) {
+    if (name === 'session') console.warn(name, packet);
+    // if (name === 'series') console.warn(name, packet);
+    // if (name === 'symbol') console.warn(name, packet);
+    // if (name === 'quote') console.warn(name, packet);
   } else {
     // packet = JSON.parse(packet);
     const [source, symbol] = packet.symbol.split(':');
