@@ -1,4 +1,4 @@
-async ({ instrument, userId, period = 3600, limit = 1000 }) => {
+async ({ instrument, userId, period = 3600, limit = 1000, wait = 2000 }) => {
   const existSub = domain.marketData.charts.getChartSigner({ userId });
   const newSub = domain.marketData.charts.getChart({ instrument, period });
   // console.log('exist', period, typeof period, existSub, newSub);
@@ -24,5 +24,5 @@ async ({ instrument, userId, period = 3600, limit = 1000 }) => {
     }
   }
 
-  return lib.marketData.responceFull(userId, newSub, new Date().getTime() + 1000);
+  return lib.marketData.responceFull(userId, newSub, new Date().getTime() + wait);
 };
