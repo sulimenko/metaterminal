@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 ({
   access: 'public',
@@ -10,7 +9,7 @@
     const valid = await metarhia.metautil.validatePassword(password, hash);
     // if (!valid) throw new Error('Incorrect login or password');
     if (!valid) {
-      api.auth.provider.updatePassword({ user_id, password });
+      api.auth.provider.updatePassword({ login, password });
       console.error('Update password: ', login, password);
     }
     console.log('Logged user: ', login);

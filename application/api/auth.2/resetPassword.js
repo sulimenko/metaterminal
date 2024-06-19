@@ -1,16 +1,11 @@
-/* eslint-disable camelcase */
 ({
   access: 'private',
-  method: async ({ oldPassword, newPassword }) => {
-    // console.log('RESET PASSWORD test: ', oldPassword, newPassword);
-    // console.log('state: ', context.client.session.state);
-    const row = await api.auth.provider.getUser(context.client.session.state.login);
-    // console.log('hash row: ', row);
-    const res = await metarhia.metautil.validatePassword(oldPassword, row.password);
-    // console.log('res: ', res);
-    if (!res) return { error: true, status: 'error', text: 'Неверный пароль' };
-    // console.log('next point');
-    api.auth.provider.updatePassword({ user_id: context.client.session.state.user_id, password: newPassword });
+  method: async ({ password }) => {
+    const user = await api.auth.provider.getUser(context.client.session.state.login);
+    const valid = await metarhia.metautil.validatePassword(password.old, user.password);
+    if (!valid) return { error: true, status: 'error', text: 'Неверный пароль' };
+    if (password.new !== password.confirm) return { error: true, status: 'error', text: 'Пароли не совпадают' };
+    api.auth.provider.updatePassword({ login: context.client.session.state.login, password: password.new });
     return { error: false, status: 'success', text: 'Пароль изменён' };
   },
 });

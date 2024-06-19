@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 ({
-  access: 'private',
-  method: async ({ account, type = 'ptfin', login = null, password = null }) => {
+  access: 'public',
+  method: async ({ user, password }) => {
+    const response = await lib.registration.terminalUser({ user, password });
+    if (response.error) return { error: true, status: 'error', text: 'Ошибка во время создания!' };
     // const contacts = await lib.ptfin.getContacts({ accounts: [account] });
     // let find = null;
     // for (const contact of contacts) {
@@ -13,6 +15,6 @@
     // const hash = await metarhia.metautil.hashPassword(password);
     // await api.auth.provider.registerUser({ userId, type, login, hash });
     // const token = await context.client.startSession();
-    return { status: 'success', token: '123' };
+    return { error: false, status: 'success', text: 'Пользователь создан' };
   },
 });

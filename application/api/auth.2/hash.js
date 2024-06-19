@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 ({
   access: 'public',
   method: async ({ message }) => {
