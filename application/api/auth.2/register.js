@@ -3,7 +3,15 @@
   access: 'public',
   method: async ({ user, password }) => {
     const response = await lib.registration.terminalUser({ user, password });
-    if (response.error) return { error: true, status: 'error', text: 'Ошибка во время создания!' };
+    if (response.error) {
+      if (response.status === 'duplication')
+        return {
+          error: true,
+          status: 'success',
+          text: 'У вас уже имеется пользотель.<br />Используйте имеющийся login для входа в терминал',
+        };
+      return { error: true, status: 'error', text: 'Ошибка во время создания!' };
+    }
     // const contacts = await lib.ptfin.getContacts({ accounts: [account] });
     // let find = null;
     // for (const contact of contacts) {
