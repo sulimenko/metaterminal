@@ -1,6 +1,6 @@
 ({
   access: 'public',
-  method: async (formData) => {
-    return lib.registration.starting({ formData });
+  method: async (form) => {
+    return lib.registration.starting({ form });
   },
 });
