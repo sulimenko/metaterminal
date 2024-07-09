@@ -1,7 +1,8 @@
-async ({ userId }) => {
-  if (!userId) return {};
+async ({ id }) => {
+  if (!id) return [];
   const method = 'data/documents';
-  const data = { user: [userId] };
+  const data = { user: [id] };
   console.log('metaterminal :', data);
+
   return lib.ptfin.sendPost({ method, data });
 };

@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async ({ user, password }) => {
-    const response = await lib.registration.terminalUser({ user, password });
+    const response = await lib.instruction.terminalUser({ user, password });
     if (response.error) {
       if (response.status === 'duplication')
         return {
