@@ -23,6 +23,10 @@
     // const hash = await metarhia.metautil.hashPassword(password);
     // await api.auth.provider.registerUser({ userId, type, login, hash });
     // const token = await context.client.startSession();
-    return { error: false, status: 'success', text: 'Пользователь создан' };
+    return {
+      error: false,
+      status: 'success',
+      text: 'Пользователь создан.<br />Ваш логин: ' + user.login,
+    };
   },
 });
