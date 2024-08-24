@@ -2,7 +2,7 @@
   host: process.env.host || '0.0.0.0',
   balancer: 8000,
   protocol: process.env.protocol || 'http',
-  ports: [8001, 8002],
+  ports: [8001],
   nagle: false,
   timeouts: {
     bind: 2000,
@@ -23,7 +23,7 @@
     timeout: 3000,
   },
   workers: {
-    pool: 2,
+    pool: 1,
     wait: 2000,
     timeout: 10000,
   },
