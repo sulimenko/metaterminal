@@ -17,7 +17,7 @@
     }
     return status;
   },
-  close() {
+  async close() {
     this.client.close();
     this.client = null;
     return;

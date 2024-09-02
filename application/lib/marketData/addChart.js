@@ -1,28 +1,12 @@
-async ({ instrument, userId, period = 3600, limit = 1000, wait = 2000 }) => {
-  const existSub = domain.marketData.charts.getChartSigner({ userId });
-  const newSub = domain.marketData.charts.getChart({ instrument, period });
-  // console.log('exist', period, typeof period, existSub, newSub);
-
+async ({ instrument, userId, period = 3600, limit = 1000, wait = 3000 }) => {
   if (['OPT', 'FUT'].includes(instrument.asset_category)) return 'Error. Unsupported: chart: ' + instrument.symbol + ', period: ' + period;
 
-  // console.error('addChart subscription: ', existSub);
+  lib.marketData.existChart({ userId });
 
-  if (existSub === null) {
-    console.warn('chartData.signers null: ', instrument);
-    domain.marketData.tvClient.client.addChartSymbol({ symbol: instrument.source + ':' + instrument.symbol, period, limit });
-  } else if (existSub.symbol !== instrument.symbol || existSub.period !== period) {
-    if (existSub.signers.size === 1) {
-      console.warn('existSub.signers ===1: ', instrument);
-      const last = { symbol: existSub.source + ':' + existSub.symbol, period: existSub.period };
-      domain.marketData.tvClient.client.updateChartSymbol({ symbol: instrument.source + ':' + instrument.symbol, period, limit, last });
-      existSub.signers.delete(userId);
-      existSub.data.full = [];
-    } else if (existSub.signers.size > 1) {
-      console.warn('existSub.signers >1: ', instrument);
-      domain.marketData.tvClient.client.addChartSymbol({ symbol: instrument.source + ':' + instrument.symbol, period, limit });
-      existSub.signers.delete(userId);
-    }
-  }
+  const newSub = domain.marketData.charts.getChart({ instrument, period, limit });
+  if (userId) newSub.signers.add(userId);
 
-  return lib.marketData.responceFull(userId, newSub, new Date().getTime() + wait);
+  const data = await lib.marketData.responceFull(newSub, new Date().getTime() + wait);
+  if (userId === undefined) domain.marketData.charts.deleteChart({ instrument, period });
+  return data;
 };

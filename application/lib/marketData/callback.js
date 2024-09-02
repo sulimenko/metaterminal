@@ -43,6 +43,7 @@
         break;
       case 'chart_update':
         chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
+        // console.warn('chart_update: ', source, symbol, packet.period, packet.chart.length, packet); // packet.chart);
         for (const userId of chart.signers) {
           domain.clients.terminal
             .getClient({ userId })

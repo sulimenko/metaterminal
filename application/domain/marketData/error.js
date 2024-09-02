@@ -22,20 +22,20 @@
         console.warn('quoteArray: ', quoteArray);
         domain.marketData.tvClient.client.addQuoteSymbols({ symbols: quoteArray });
 
-        for (const each of domain.marketData.charts.values.values()) {
-          for (const period in each) {
-            if (each[period].signers.size > 0) {
-              console.log('charts', each);
-              domain.marketData.tvClient.client.addChartSymbol({
-                symbol: each[period].source + ':' + each[period].symbol,
-                period: each[period].period,
-                limit: each[period].limit,
-              });
-            }
-          }
-        }
+        // for (const each of domain.marketData.charts.values.values()) {
+        //   for (const period in each) {
+        //     if (each[period].signers.size > 0) {
+        //       console.log('charts', each);
+        //       domain.marketData.tvClient.client.addChartSymbol({
+        //         symbol: each[period].source + ':' + each[period].symbol,
+        //         period: each[period].period,
+        //         limit: each[period].limit,
+        //       });
+        //     }
+        //   }
+        // }
       }
-    }, 500);
+    }, 800);
     return;
   },
 });

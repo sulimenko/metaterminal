@@ -2,6 +2,7 @@
   access: 'public',
   method: async (needle) => {
     console.log(needle);
+    if (typeof needle === 'object') needle = needle.data;
     const haystack = await fetch(
       'https://symbol-search.tradingview.com/symbol_search/?text=' + needle,
       // 'https://symbol-search.tradingview.com/symbol_search/v3/?text=TSLA&hl=1&exchange=&lang=ru&search_type=undefined&domain=production&sort_by_country=RU',
