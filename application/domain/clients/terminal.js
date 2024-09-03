@@ -2,7 +2,7 @@
   values: new Map(),
   setClient({ userId, client }) {
     client.on('close', () => {
-      console.warn('socet close user_id:', client.session.state.user_id);
+      console.warn('Socket close user_id:', client.session.state.user_id);
       lib.marketData.existChart({ userId: client.session.state.user_id });
     });
     return this.values.set(userId, client);
