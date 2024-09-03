@@ -11,6 +11,6 @@ async (chart, end) => {
     return result;
   };
 
-  const result = { chart: [], symbol: chart.symbol };
+  const result = { chart: { full: [], last: {} }, symbol: chart.symbol };
   return waitChart(result, chart, end);
 };
