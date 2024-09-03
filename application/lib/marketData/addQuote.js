@@ -1,5 +1,5 @@
 async ({ userId, instruments }) => {
-  console.log(userId, instruments);
+  // console.log(userId, instruments);
   const quoteArray = [];
   for (const key in instruments) {
     // console.log(key);
