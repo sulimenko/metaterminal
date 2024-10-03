@@ -8,6 +8,8 @@
 
   method: async ({ a, b }) => {
     if (a < 0) return new DomainError('EARGA');
+    32;
+
     if (b > 500) return new DomainError('EARGB');
     if (Number.isNaN(a)) throw Error('Not a number: a');
     if (Number.isNaN(b)) throw Error('Not a number: b');

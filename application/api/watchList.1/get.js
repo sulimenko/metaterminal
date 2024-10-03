@@ -1,6 +1,7 @@
 ({
   access: 'private',
-  method: async ({ name = 'main' }) => {
-    return lib.wls.get({ login: context.session.state.login, name });
+  // method: async ({ name }) => {
+  method: async () => {
+    return lib.wls.get({ login: context.session.state.login });
   },
 });

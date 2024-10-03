@@ -1,6 +1,6 @@
 ({
   access: 'private',
-  method: async ({ name = 'main', instrument = {} }) => {
+  method: async ({ name, instrument = {} }) => {
     return lib.wls.add({ login: context.session.state.login, name, instrument });
   },
 });

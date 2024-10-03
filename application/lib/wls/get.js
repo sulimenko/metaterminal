@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
-async ({ login, name }) => {
-  const wl = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login, name }).order('order');
+// async ({ login, name }) => {
+async ({ login }) => {
+  // const wl = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login, name }).order('order');
+  const wl = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login }).order('order');
 
   const list = await db.pg.select('instruments', ['symbol', 'asset_category', 'listing_exchange', 'multiplier', 'underlying_symbol'], {
     symbol: wl.map((each) => each.symbol),

@@ -4,7 +4,6 @@ async ({ login, name, instrument }) => {
   // console.log(wl);
   // const find = wl.find((each) => each.symbol === instrument.symbol && each.source === instrument.source);
   const find = wl.find((each) => each.symbol === instrument.symbol);
-
   if (find !== undefined) return false;
   await db.pg.insert('terminal_wls', {
     login,
@@ -16,6 +15,5 @@ async ({ login, name, instrument }) => {
     created_at: new Date(),
     updated_at: new Date(),
   });
-
   return true;
 };
