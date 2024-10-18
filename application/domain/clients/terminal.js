@@ -19,7 +19,7 @@
       console.warn('Socket close user_id:', client.session.state.user_id);
       this.cleaningTimers.set(
         userId,
-        setTimeout(() => lib.marketData.existChart({ userId: client.session.state.user_id }), 1 * 20 * 1000),
+        setTimeout(() => lib.marketData.existChart({ userId: client.session.state.user_id }), 30 * 60 * 1000),
       );
     });
     return this.values.set(userId, client);
