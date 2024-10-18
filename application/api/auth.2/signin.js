@@ -22,7 +22,7 @@
     const { ip } = context.client;
     await api.auth.provider.createSession(token, data, { ip, login });
     domain.clients.terminal.setClient({
-      login: context.client.session.state.login,
+      // login: context.client.session.state.login,
       userId: context.client.session.state.user_id,
       client: context.client,
     });
