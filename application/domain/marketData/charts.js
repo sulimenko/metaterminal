@@ -21,7 +21,11 @@
     let chart = this.getSymbol({ instrument });
     if (chart[period] === undefined) {
       chart[period] = this.default({ instrument, period });
-      domain.marketData.tvClient.client.addChartSymbol({ symbol: instrument.source + ':' + instrument.symbol, period, limit });
+      if (instrument.asset_category === 'OPT') {
+        lib.marketData.optionChart({ instrument, period, limit });
+      } else {
+        domain.marketData.tvClient.client.addChartSymbol({ symbol: instrument.source + ':' + instrument.symbol, period, limit });
+      }
       this.values.set(instrument.symbol, chart);
       chart = this.getSymbol({ instrument });
     }

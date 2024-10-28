@@ -1,5 +1,5 @@
 async ({ instruments, userId, period = 3600, limit = 1000, wait = 5000 }) => {
-  const unsupported = instruments.filter((instrument) => ['OPT', 'FUT'].includes(instrument.asset_category));
+  const unsupported = instruments.filter((instrument) => ['FUT'].includes(instrument.asset_category));
   if (unsupported.length > 0) {
     return unsupported.map((instrument) => 'Error. Unsupported: chart: ' + instrument.symbol + ', period: ' + period);
   }
