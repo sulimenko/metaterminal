@@ -2,11 +2,13 @@
   access: 'public',
 
   parameters: {
-    token: 'string',
+    token: { type: 'string', optional: true },
   },
 
   method: async ({ token }) => {
     console.warn('start:', token, context.client.session);
+    if (typeof token === 'string') return { status: 'not logged' };
+
     if (domain.clients.terminal.starting) await lib.utils.wait(1000);
     domain.clients.terminal.starting = true;
     setTimeout(() => (domain.clients.terminal.starting = false));
