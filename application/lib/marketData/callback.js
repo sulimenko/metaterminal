@@ -53,7 +53,7 @@
         // console.log('chart_update: ', packet.chart, chart.data.last);
         break;
       case 'levelI':
-        quote = domain.marketData.quotes.getQuote({ symbol });
+        quote = domain.marketData.quotes.getQuote({ instrument: { symbol } });
         // console.log(packet, quote.data, quote);
         Object.keys(packet).forEach((key) => (quote.data[key] = packet[key]));
         for (const userId of quote.signers) {

@@ -1,3 +1,3 @@
 async ({ symbol }) => {
-  return domain.marketData.quotes.getQuote({ symbol }).data;
+  return domain.marketData.quotes.getQuote({ instrument: { symbol } }).data;
 };
