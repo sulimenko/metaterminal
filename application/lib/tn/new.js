@@ -1,8 +1,16 @@
 // eslint-disable-next-line no-unused-vars
 async ({ sid, account }) => {
   const WebSocket = npm.ws;
+
+  if (sid === undefined || sid === null) {
+    console.error(account, 'SID empty!!! sid =', sid);
+    return null;
+  }
+
   const url = 'wss://wss.tradernet.com?SID=' + sid;
   const client = new WebSocket(url);
+
+  console.warn('new ws:', account, url);
 
   return new Promise((resolve) => {
     let ping = 0;

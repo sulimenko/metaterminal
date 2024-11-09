@@ -1,9 +1,9 @@
-async (account) => {
+async (account, update = false) => {
   const method = 'terminal/get_sid';
-  const data = { account };
+  const data = { account, update };
 
   const result = await lib.ptfin.sendPost({ method, data });
-  console.log('getSidApi', result);
+  console.log('getSidApi', account, result);
   return result.SID;
 
   // const data = { cmd: 'getAuthInfo', apiKey: keys.pkey, nonce: lib.utils.microtime() * 10000 };
