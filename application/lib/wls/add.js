@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
 async ({ login, name, instrument }) => {
   const wl = await db.pg.select('terminal_wls', ['name', 'symbol', 'source', 'order'], { login, name }).order('order');
-  // console.log(wl);
+  // console.log('name :', name, 'instrument :', instrument);
   // const find = wl.find((each) => each.symbol === instrument.symbol && each.source === instrument.source);
   const find = wl.find((each) => each.symbol === instrument.symbol);
   if (find !== undefined) return false;
+  // console.log(find);
   await db.pg.insert('terminal_wls', {
     login,
     name,

@@ -13,14 +13,14 @@
     const [source, symbol] = packet.symbol.split(':');
     packet.symbol = symbol;
     packet.source = source;
-    // console.log(source, symbol, packet);
+    // console.log('chart data packet :', source, symbol, name, packet);
     let chart = null;
     let quote = null;
     let data = null;
     switch (name) {
       case 'chart_history':
         chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
-        // console.warn('chart_history: ', source, symbol, packet.period, packet.chart.length, packet); // packet.chart);
+        console.warn('chart_history: ', source, symbol, packet.period, packet.chart.length); // packet.chart);
         const chartLength = packet.chart.length;
         if (chartLength === 1) {
           // console.log('chartLength1 === 1: ', chartLength);
@@ -31,7 +31,7 @@
           // console.table(chart.data);
         } else if (chartLength > 1) {
           // console.log('chartLength1 >1: ', chartLength);
-          // console.table(chart.data);
+          console.table('chart :', chart.data);
           chart.data.full = [];
           chart.data.last = { ...packet.chart.pop() };
           for (const bar of packet.chart) {
