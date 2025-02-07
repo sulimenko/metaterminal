@@ -20,7 +20,7 @@
     switch (name) {
       case 'chart_history':
         chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
-        console.warn('chart_history: ', source, symbol, packet.period, packet.chart.length); // packet.chart);
+        // console.warn('chart_history: ', source, symbol, packet.period, packet.chart.length); // packet.chart);
         const chartLength = packet.chart.length;
         if (chartLength === 1) {
           // console.log('chartLength1 === 1: ', chartLength);
@@ -31,7 +31,7 @@
           // console.table(chart.data);
         } else if (chartLength > 1) {
           // console.log('chartLength1 >1: ', chartLength);
-          console.table('chart :', chart.data);
+          // console.table('chart :', chart.data);
           chart.data.full = [];
           chart.data.last = { ...packet.chart.pop() };
           for (const bar of packet.chart) {

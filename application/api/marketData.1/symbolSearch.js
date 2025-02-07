@@ -22,7 +22,7 @@
 
     const json = await haystack.json();
     const list = json.filter((each) =>
-      ['NASDAQ', 'NYSE', 'AMEX', 'OTC', 'LSE', 'LSEIOB1', 'BINANCE'].includes(each.prefix || each.exchange),
+      ['NASDAQ', 'NYSE', 'AMEX', 'CBOE', 'OTC', 'LSE', 'LSEIOB1', 'BINANCE'].includes(each.prefix || each.exchange),
     );
     for (const each of list) each.source = each.prefix !== undefined ? each.prefix : each.exchange;
     // console.log(list);
