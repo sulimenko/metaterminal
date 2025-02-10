@@ -53,13 +53,15 @@ async ({ account }) => {
         this.timers.restart = setTimeout(() => {
           this.timers.restart = null;
           this.reconnect++;
-          this.connect();
+          this.connect(this.access.sid);
         }, wait * 1000);
       }
     },
 
-    connect: function () {
+    connect: function (sid) {
       console.log('Connecting WS ' + this.access.account);
+
+      this.access.sid = sid;
 
       clearTimeout(this.timers.open);
       clearTimeout(this.timers.ping);
