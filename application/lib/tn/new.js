@@ -1,60 +1,116 @@
-// eslint-disable-next-line no-unused-vars
-async ({ sid, account }) => {
+/* eslint-disable object-shorthand */
+async ({ account }) => {
   const WebSocket = npm.ws;
 
-  if (sid === undefined || sid === null) {
-    console.error(account, 'SID empty!!! sid =', sid);
-    return null;
-  }
+  return {
+    access: { sid: null, account },
+    settings: { connectTimeout: 30, heartbeatInterval: 30, pingPongTime: 5, restartTime: 2, maxReconnect: 20 },
+    timers: { open: null, ping: null, heartbeat: null, restart: null },
+    reconnect: 0,
+    ws: null,
 
-  const url = 'wss://wss.tradernet.com?SID=' + sid;
-  const client = new WebSocket(url);
+    heartbeat: function () {
+      if (this.timers.heartbeat === null) {
+        this.ws.on('ping', () => this.ws.pong());
+        this.ws.on('pong', () => {
+          console.warn('get PONG', this.access.account);
+          clearTimeout(this.timers.ping); // Убираем таймер, если получили PONG
+        });
 
-  console.warn('new ws:', account, url);
+        this.timers.heartbeat = setInterval(() => {
+          if (!this.ws || this.ws.readyState !== 1) {
+            console.warn('WS ' + this.access.account + ' is not in OPEN state, restarting...');
+            this.restart();
+            return;
+          }
 
-  return new Promise((resolve) => {
-    let ping = 0;
-    client.on('connect', function () {
-      console.log('connect');
-    });
+          this.ws.ping();
+          console.warn('send PING ' + this.access.account);
 
-    client.onopen = function () {
-      console.log('onopen ws', account);
-      ping = setInterval(() => (client.ping(), console.warn('send PING', account)), 30000);
-      client.send(JSON.stringify(['session']));
-      client.send(JSON.stringify(['orders']));
-      // client.send(JSON.stringify(['orderBook', ['AAPL.US', 'TSLA.US']]));
-      // client.send(JSON.stringify(['portfolio']));
-      resolve(client);
-    };
-
-    client.onmessage = function ({ data }) {
-      const [event, messageData] = JSON.parse(data);
-      if (!['keepAlive'].includes(event)) {
-        if (event === 'orders') {
-          // console.log(messageData);
-          lib.tn.updateStatus({ account, orders: messageData });
-          // } else if (event === 'b') {}
-        } else {
-          console.warn(account, event, messageData);
-        }
+          clearTimeout(this.timers.ping); // Очищаем предыдущий таймер
+          this.timers.ping = setTimeout(() => {
+            console.log('No PONG ' + this.access.account + 'received, reconnecting...');
+            this.restart();
+          }, this.settings.pingPongTime * 1000); // Ждём PONG 5 секунд
+        }, this.settings.heartbeatInterval * 1000);
       }
-    };
+    },
 
-    client.on('pong', () => console.warn('get PONG', account));
+    restart: function () {
+      if (this.reconnect >= this.settings.maxReconnect) {
+        console.error('Max reconnect attempts reached for ' + this.access.account + ', stopping.');
+        return;
+      }
 
-    client.onclose = function (e) {
-      console.error('sockets closed', 'code:', e.code);
-      console.error('clean:', e.wasCleane, 'reason:', e.reason);
-      clearInterval(ping);
-      domain.clients.tn.deleteClient(account);
-      // Попробуем подключиться через 2 секунд после разрыва
-      setTimeout(() => domain.clients.tn.getClient(account), 2000);
-    };
+      clearTimeout(this.timers.open);
+      clearTimeout(this.timers.ping);
+      clearInterval(this.timers.heartbeat);
+      if (this.timers.restart === null) {
+        // const wait = (this.reconnect + 1) * this.settings.restartTime;
+        const wait = Math.min(2 ** this.reconnect, 30) * this.settings.restartTime;
+        // Попробуем подключиться через (Math.min(2^reconnect, 30) * 2 секунды) после разрыва
+        console.log('Restarting WS ' + this.access.account + ' attempt ' + this.reconnect + ', wait: ' + wait);
+        this.timers.restart = setTimeout(() => {
+          this.timers.restart = null;
+          this.reconnect++;
+          this.connect();
+        }, wait * 1000);
+      }
+    },
 
-    client.onerror = function (error) {
-      console.error('Sockets.error: ', error);
-      client.close();
-    };
-  });
+    connect: function () {
+      console.log('Connecting WS ' + this.access.account);
+
+      clearTimeout(this.timers.open);
+      clearTimeout(this.timers.ping);
+      clearTimeout(this.timers.restart);
+      clearInterval(this.timers.heartbeat);
+      this.ws?.close(); // Принудительно закрываем если есть соединение
+
+      this.ws = new WebSocket('wss://wss.tradernet.com?SID=' + this.access.sid);
+
+      // Таймер на случай, если сервер не отвечает
+      this.timers.open = setTimeout(() => {
+        console.error('WS connection timeout ' + this.access.account + ', restarting...');
+        this.ws?.close(); // Принудительно закрываем зависшее соединение
+        this.restart();
+      }, this.settings.connectTimeout * 1000);
+
+      this.ws.onopen = () => {
+        console.log('WS connected ' + this.access.account);
+        this.reconnect = 0; // Сброс попыток переподключения
+        clearTimeout(this.timers.open);
+        this.heartbeat(); // Запуск пинг-понга
+
+        this.ws.send(JSON.stringify(['session']));
+        this.ws.send(JSON.stringify(['orders']));
+        // this.ws.send(JSON.stringify(['orderBook', ['AAPL.US', 'TSLA.US']]));
+        // this.ws.send(JSON.stringify(['portfolio']));
+      };
+
+      this.ws.onmessage = ({ data }) => {
+        // console.log('onmessage', data);
+        const [event, messageData] = JSON.parse(data);
+        if (event !== 'keepAlive') {
+          if (event === 'orders') {
+            // console.log(messageData);
+            lib.tn.updateStatus({ account: this.access.account, orders: messageData });
+            // } else if (event === 'b') {}
+          } else {
+            console.warn(this.access.account, event, messageData);
+          }
+        }
+      };
+
+      this.ws.onerror = (error) => {
+        console.error('WS error ' + this.access.account, error);
+        this.restart();
+      };
+
+      this.ws.onclose = (event) => {
+        console.warn('WS closed ' + this.access.account + ', code: ' + event.code);
+        this.restart();
+      };
+    },
+  };
 };
