@@ -5,7 +5,7 @@ async ({ account }) => {
   return {
     access: { sid: null, account },
     settings: { connectTimeout: 30, heartbeatInterval: 30, waitPongTime: 10, restartTime: 2, maxReconnect: 20 },
-    timers: { open: null, pong: null, heartbeat: null, restart: null, closing: null },
+    timers: { open: null, pong: null, heartbeat: null, restart: null },
     reconnect: 0,
     ws: null,
 
@@ -38,6 +38,7 @@ async ({ account }) => {
 
         console.warn('WS standart close: ' + this.access.account);
 
+        this.ws.removeAllListeners('close');
         this.ws.on('close', () => {
           console.warn('WS closed ' + this.access.account);
           this.ws = null;
@@ -45,7 +46,7 @@ async ({ account }) => {
         });
         this.ws.close(1000, 'Client shutdown');
 
-        this.timers.closing = setTimeout(() => {
+        setTimeout(() => {
           if (this.ws && this.ws.readyState !== WebSocket.CLOSED) {
             console.warn('WS force close: ' + this.access.account);
             this.ws.terminate();
@@ -69,10 +70,10 @@ async ({ account }) => {
       // Попробуем подключиться через (Math.min(2^reconnect, 30) * 2 секунды) после разрыва
       console.log('Restarting WS ' + this.access.account + ' attempt: ' + this.reconnect + ', wait: ' + wait + ' sec');
       this.timers.restart = setTimeout(async () => {
+        await this.close();
         clearTimeout(this.timers.restart);
         this.timers.restart = null;
         this.reconnect++;
-        await this.close();
         if (this.ws?.readyState !== WebSocket.OPEN) this.connect(this.access.sid);
       }, wait * 1000);
     },
@@ -126,7 +127,6 @@ async ({ account }) => {
       });
 
       this.ws.on('close', (event) => {
-        clearTimeout(this.timers.closing);
         this.ws = null;
         console.warn('WS closed ' + this.access.account + ', code: ' + event.code);
         this.restart();
