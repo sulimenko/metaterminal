@@ -1,6 +1,6 @@
 ({
   values: new Map(),
-  restartClients() {
+  async restartClients() {
     for (const [account, client] of this.values.entries) {
       const status = client.status();
       if (['CLOSED', 'UNKNOWN'].includes(status)) {
@@ -9,6 +9,7 @@
         client.restart();
       }
     }
+    return [];
   },
   async setClient(account, update = false) {
     const sid = await lib.tn.getSidApi(account, update);

@@ -2,7 +2,7 @@
   access: 'private',
   method: async () => {
     console.log('updateWS');
-    await lib.tn.connectWS(true);
+    await domain.client.tn.restartClients();
     return 'reconnect';
   },
 });
