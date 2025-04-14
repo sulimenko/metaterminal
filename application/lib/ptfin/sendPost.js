@@ -8,7 +8,7 @@ async ({ method, data, type = 'application/json' }) => {
   // for (const key of Object.keys(data)) send_data[key] = data[key];
 
   try {
-    const res = await metarhia.metautil.fetch(config.ptfin.main.url + method, {
+    const res = await fetch(config.ptfin.main.url + method, {
       method: 'POST',
       headers: {
         'Content-Type': type,
