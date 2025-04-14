@@ -2,8 +2,10 @@
   socket: {
     url: process.env.marketdata_url,
     options: process.env.marketdata_options,
-    login: process.env.marketdata_login,
-    pass: process.env.marketdata_pass,
-    token: process.env.marketdata_token,
+    sessionid: process.env.marketdata_sessionid,
+    sessionidsign: process.env.marketdata_sessionid_sign,
+    imageurl: process.env.marketdata_image_url,
+    userid: process.env.marketdata_user_id,
+    tvecuid: process.env.marketdata_tv_ecuid,
   },
 });

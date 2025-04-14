@@ -9,10 +9,11 @@
       status = await this.client.connect({
         url: config.marketdata.socket.url,
         options: JSON.parse(config.marketdata.socket.options),
-        login: config.marketdata.socket.login,
-        pass: config.marketdata.socket.pass,
-        token: config.marketdata.socket.token,
         result: lib.marketData.callback,
+        sessionid: config.marketdata.socket.sessionid,
+        sessionidsign: config.marketdata.socket.sessionidsign,
+        tvecuid: config.marketdata.socket.tvecuid,
+        imageurl: config.marketdata.socket.imageurl,
       });
     }
     return status;
