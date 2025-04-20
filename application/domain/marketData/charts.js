@@ -17,7 +17,7 @@
     if (data === undefined) data = this.values.set(instrument.symbol, {}).get(instrument.symbol);
     return data;
   },
-  getChart({ instrument, period, limit }) {
+  getChart({ instrument, period, limit = 1000 }) {
     let chart = this.getSymbol({ instrument });
     if (chart[period] === undefined) {
       chart[period] = this.default({ instrument, period });

@@ -20,6 +20,10 @@ async ({ instruments, userId, period = 3600, limit = 1000, wait = 5000 }) => {
   // console.log(results);
 
   return results.reduce((acc, result, index) => {
+    if (result.chart.full.length === 0) {
+      console.error('result chart empty: ', result);
+      return acc;
+    }
     acc[instruments[index].symbol] = result;
     return acc;
   }, {});
