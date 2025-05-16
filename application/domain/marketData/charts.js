@@ -3,6 +3,7 @@
     return {
       symbol: instrument.symbol,
       source: instrument.source,
+      symbolId: instrument.symbolId || null,
       period,
       data: { full: [], last: {} },
       signers: new Set(),
