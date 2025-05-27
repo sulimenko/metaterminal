@@ -1,19 +1,18 @@
 async ({ instrument, period, limit }) => {
   console.warn(instrument, period, limit);
-  const method = 'marketdata/charts';
-  const data = { instruments: [instrument], period, limit };
+  const method = 'marketdata/barcharts';
+  const data = { symbol: lib.utils.makeOptSymbol(instrument.symbol), period, limit: 100 };
 
-  const instruments = await lib.ptfin.sendPost({ method, data });
+  const response = await lib.ts.sendPost({ method, data });
+  if (response.result.Bars.length === 0) return { error: true, text: 'No data for this period' };
 
-  let chart = null;
-  for (const instrument of instruments) {
-    chart = domain.marketData.charts.getChart({ instrument, period });
-    chart.data.full = [];
-    chart.data.last = { ...instrument.chart.pop() };
-    for (const bar of instrument.chart) {
-      chart.data.full.push({ ...bar });
-    }
+  response.result.Bars.sort((a, b) => a.Epoch - b.Epoch);
+  const chart = domain.marketData.charts.getChart({ instrument, period });
+  chart.data.last = lib.utils.makeTsBar(response.result.Bars[0]);
+  chart.data.full = [];
+  for (const bar of response.result.Bars) {
+    chart.data.full.push(lib.utils.makeTsBar(bar));
   }
 
-  return ['ok'];
+  return { error: false };
 };
