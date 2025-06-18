@@ -12,7 +12,7 @@ async ({ instrument, period, limit }) => {
 
   response.result.Bars.sort((a, b) => a.Epoch - b.Epoch);
   const chart = domain.marketData.charts.getChart({ instrument, period });
-  chart.data.last = lib.utils.makeTsBar(response.result.Bars[0]);
+  chart.data.last = lib.utils.makeTsBar(response.result.Bars.pop());
   chart.data.full = [];
   for (const bar of response.result.Bars) {
     chart.data.full.push(lib.utils.makeTsBar(bar));

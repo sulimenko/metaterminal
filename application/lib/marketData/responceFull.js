@@ -17,7 +17,6 @@ async (chart, end) => {
       symbol: chart.symbol,
       period: chart.period,
       source: chart.source,
-      symbolId: chart.symbolId,
     },
   };
 

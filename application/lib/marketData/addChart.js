@@ -27,18 +27,4 @@ async ({ instruments, userId, period = 3600, limit = 1000, wait = 5000 }) => {
     acc[instruments[index].symbol] = result;
     return acc;
   }, {});
-
-  // const newSub = domain.marketData.charts.getChart({ instrument, period, limit });
-  // if (userId) newSub.signers.add(userId);
-
-  // return new Promise((resolve) => {
-  //   lib.marketData.responceFull(newSub, new Date().getTime() + wait).then((chart) => {
-  //     data[instrument.symbol] = chart;
-  //     if (userId === undefined) domain.marketData.charts.deleteChart({ instrument, period });
-  //     console.log(data[instrument.symbol]);
-  //     if (Object.keys(data).length === instruments.length) resolve(data);
-  //   });
-  // });
-  // }
-  // return data;
 };

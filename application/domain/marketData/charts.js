@@ -3,16 +3,12 @@
     return {
       symbol: instrument.symbol,
       source: instrument.source,
-      symbolId: instrument.symbolId || null,
       period,
       data: { full: [], last: {} },
       signers: new Set(),
     };
   },
   values: new Map(),
-  // setChart({ data }) {
-  //   this.values.set(data.symbol, { [data.period.toString()]: data });
-  // },
   getSymbol({ instrument }) {
     let data = this.values.get(instrument.symbol);
     if (data === undefined) data = this.values.set(instrument.symbol, {}).get(instrument.symbol);
