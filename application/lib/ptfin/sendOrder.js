@@ -7,6 +7,5 @@ async ({ data, instrument }) => {
   domain.ptfin.queue.addTask({ method, data: send_data });
   // return domain.ptfin.send(send_data);
   // const result = await domain.ptfin.send(send_data);
-  // console.warn(typeof result, result);
   // return result;
 };
