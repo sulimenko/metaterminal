@@ -13,7 +13,7 @@
     const [source, symbol] = packet.symbol.split(':');
     packet.symbol = symbol;
     packet.source = source;
-    // console.log('chart data packet :', source, symbol, name, packet);
+    // console.info('chart data packet :', source, symbol, name, packet);
     let chart = null;
     let quote = null;
     let data = null;
@@ -23,21 +23,21 @@
         // console.warn('chart_history: ', source, symbol, packet.period, packet.chart.length); // packet.chart);
         const chartLength = packet.chart.length;
         if (chartLength === 1) {
-          // console.log('chartLength1 === 1: ', chartLength);
+          // console.info('chartLength1 === 1: ', chartLength);
           // console.table(chart.data);
           chart.data.full.push({ ...chart.data.last });
           chart.data.last = { ...packet.chart[0] };
-          // console.log('chartLength2 === 1: ', chartLength);
+          // console.info('chartLength2 === 1: ', chartLength);
           // console.table(chart.data);
         } else if (chartLength > 1) {
-          // console.log('chartLength1 >1: ', chartLength);
+          // console.info('chartLength1 >1: ', chartLength);
           // console.table('chart :', chart.data);
           chart.data.full = [];
           chart.data.last = { ...packet.chart.pop() };
           for (const bar of packet.chart) {
             chart.data.full.push({ ...bar });
           }
-          // console.log('chartLength2 > 1: ', chartLength);
+          // console.info('chartLength2 > 1: ', chartLength);
           // console.table(chart.data);
         }
         break;
@@ -50,14 +50,14 @@
             .emit('marketData/chart_update', { chart: { last: packet.chart[0] }, symbol, userId });
         }
         chart.data.last = packet.chart[0];
-        // console.log('chart_update: ', packet.chart, chart.data.last);
+        // console.info('chart_update: ', packet.chart, chart.data.last);
         break;
       case 'levelI':
         quote = domain.marketData.quotes.getQuote({ instrument: { symbol } });
-        // console.log(packet, quote.data, quote);
+        // console.info(packet, quote.data, quote);
         Object.keys(packet).forEach((key) => (quote.data[key] = packet[key]));
         for (const userId of quote.signers) {
-          // console.log(userId);
+          // console.info(userId);
           let client = domain.clients.terminal.getClient({ userId });
           if (client) client.emit('marketData/quote', quote.data);
           client = null;
