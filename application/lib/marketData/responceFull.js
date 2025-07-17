@@ -5,7 +5,7 @@ async (chart, end) => {
         result.chart = JSON.parse(JSON.stringify(chart.data));
         return result;
       }
-      // console.log('responceFull', chart.symbol, new Date().getTime(), end, chart.data);
+      // console.info('responceFull', chart.symbol, new Date().getTime(), end, chart.data);
       await lib.utils.wait(period);
     }
     return result;

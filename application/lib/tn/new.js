@@ -22,7 +22,7 @@ async ({ account }) => {
         this.ws.ping();
         console.warn('send PING ' + this.access.account);
         this.timers.pong = setTimeout(() => {
-          console.log('No PONG ' + this.access.account + ', reconnecting...');
+          console.info('No PONG ' + this.access.account + ', reconnecting...');
           this.restart();
         }, this.settings.waitPongTime * 1000); // Ждём PONG pingPongTime секунд
       }, this.settings.heartbeatInterval * 1000);
@@ -68,7 +68,7 @@ async ({ account }) => {
       // const wait = (this.reconnect + 1) * this.settings.restartTime;
       const wait = Math.min(2 ** this.reconnect, 30) * this.settings.restartTime;
       // Попробуем подключиться через (Math.min(2^reconnect, 30) * 2 секунды) после разрыва
-      console.log('Restarting WS ' + this.access.account + ' attempt: ' + this.reconnect + ', wait: ' + wait + ' sec');
+      console.info('Restarting WS ' + this.access.account + ' attempt: ' + this.reconnect + ', wait: ' + wait + ' sec');
       this.timers.restart = setTimeout(async () => {
         await this.close();
         clearTimeout(this.timers.restart);
@@ -79,7 +79,7 @@ async ({ account }) => {
     },
 
     connect: function (sid) {
-      console.log('Connecting WS ' + this.access.account);
+      console.info('Connecting WS ' + this.access.account);
       this.access.sid = sid;
 
       // Таймер на случай, если сервер не отвечает
@@ -91,7 +91,7 @@ async ({ account }) => {
       this.ws = new WebSocket('wss://wss.tradernet.com?SID=' + this.access.sid);
 
       this.ws.on('open', () => {
-        console.log('WS connected ' + this.access.account);
+        console.info('WS connected ' + this.access.account);
         this.reconnect = 0; // Сброс попыток переподключения
         clearTimeout(this.timers.open);
         this.heartbeat(); // Запуск пинг-понга

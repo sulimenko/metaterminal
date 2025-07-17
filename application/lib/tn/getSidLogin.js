@@ -18,7 +18,7 @@ async ({ keys }) => {
     'Content-Type': 'application/x-www-form-urlencoded',
   });
 
-  // console.log(data);
+  // console.info(data);
   const result = await fetch(url, {
     method: 'POST',
     headers,
@@ -27,6 +27,6 @@ async ({ keys }) => {
     .then((res) => (res.status === 200 ? res.json() : res.text()))
     .then((data) => data);
 
-  // console.log(result);
+  // console.info(result);
   return result.SID;
 };

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 async ({ accounts }) => {
   if (accounts.includes(null)) return [];
-  // console.log('balances before', config.ptfin.main.url + method, accounts);
+  // console.info('balances before', config.ptfin.main.url + method, accounts);
   const method = 'terminal/balance';
   const data = { accounts };
 

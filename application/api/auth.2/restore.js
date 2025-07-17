@@ -13,7 +13,7 @@
     if (context.client.session && context.client.session.token === token) return { status: 'logged' };
 
     const restored = context.client.restoreSession(token);
-    // console.log('restore:', restored, token, context.client.session);
+    // console.info('restore:', restored, token, context.client.session);
     if (restored) return { status: 'logged' };
     const data = await api.auth.provider.readSession(token);
     if (data) {

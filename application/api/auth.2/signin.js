@@ -3,7 +3,7 @@
   access: 'public',
   method: async ({ login, password }) => {
     const user = await api.auth.provider.getUser(login);
-    // console.log(login, password, user);
+    // console.info(login, password, user);
     // if (!user) throw new Error('Incorrect login or password');
     if (!user) return { status: 'unlogged', text: 'Incorrect login or password', token: null };
     if (user.type === 'alpaca') {
@@ -13,9 +13,9 @@
     const { user_id, password: hash, type } = user;
     const valid = await metarhia.metautil.validatePassword(password, hash);
     // if (!valid) throw new Error('Incorrect login or password');
-    // console.log(login, password, user, hash, valid);
+    // console.info(login, password, user, hash, valid);
     if (!valid) return { status: 'unlogged', text: 'Incorrect login or password', token: null };
-    console.log(`Logged user: ${login}`);
+    console.info(`Logged user: ${login}`);
     const token = api.auth.provider.generateToken();
     const data = { user_id, login, type };
     context.client.startSession(token, data);

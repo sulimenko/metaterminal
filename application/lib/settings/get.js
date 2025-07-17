@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 async ({ login, type }) => {
   const setting = await db.pg.row('terminal_settings', [type], { login });
-  // console.log(setting);
+  // console.info(setting);
   if (setting) return setting[type];
 
   await db.pg.insert('terminal_settings', {

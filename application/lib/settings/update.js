@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 async ({ login, updates = {} }) => {
-  // console.log(login, updates);
+  // console.info(login, updates);
   let exist = {};
   for (const [key, value] of Object.entries(updates)) {
     exist = await lib.settings.get({ login, type: key });

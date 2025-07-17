@@ -1,7 +1,7 @@
 ({
   router({ method, args, verb, headers }) {
     const ip = context.client.ip;
-    console.log({ method, args, ip, verb, headers });
+    console.info({ method, args, ip, verb, headers });
     return {};
   },
 });

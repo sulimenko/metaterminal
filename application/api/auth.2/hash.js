@@ -1,7 +1,7 @@
 ({
   access: 'public',
   method: async ({ message }) => {
-    console.log(message);
+    console.info(message);
     return metarhia.metautil.hashPassword(message);
   },
 });

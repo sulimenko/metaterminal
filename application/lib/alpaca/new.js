@@ -9,22 +9,22 @@ async ({ keyId, secretKey, paper, feed }) => {
 
   return new Promise((resolve) => {
     client.trade_ws.onConnect(async () => {
-      console.log('Connected');
+      console.info('Connected');
       client.trade_ws.subscribe(['trade_updates', 'account_updates']);
       resolve(client);
     });
     client.trade_ws.onStateChange((newState) => {
-      console.log(`State changed to ${newState}`);
+      console.info(`State changed to ${newState}`);
     });
     client.trade_ws.onOrderUpdate((data) => {
-      // console.log(`Order updates: ${JSON.stringify(data)}`);
+      // console.info(`Order updates: ${JSON.stringify(data)}`);
       lib.alpaca.updateTrades(data);
     });
     client.trade_ws.onAccountUpdate((data) => {
-      console.log(`Account updates: ${JSON.stringify(data)}`);
+      console.info(`Account updates: ${JSON.stringify(data)}`);
     });
     client.trade_ws.onDisconnect(() => {
-      console.log('Disconnected');
+      console.info('Disconnected');
     });
     client.trade_ws.connect();
   });

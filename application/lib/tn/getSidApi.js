@@ -3,7 +3,7 @@ async (account, update = false) => {
   const data = { account, update };
 
   const result = await lib.ptfin.sendPost({ method, data });
-  console.log('getSidApi', account, result);
+  console.info('getSidApi', account, result);
   return result.SID;
 
   // const data = { cmd: 'getAuthInfo', apiKey: keys.pkey, nonce: lib.utils.microtime() * 10000 };
@@ -17,7 +17,7 @@ async (account, update = false) => {
   // }
   // const body = arr.join('&');
 
-  // console.log(body);
+  // console.info(body);
   // const result = await fetch('https://tradernet.com/api/v2/cmd/' + data.cmd, {
   //   method: 'POST',
   //   headers,

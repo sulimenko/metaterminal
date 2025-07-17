@@ -8,6 +8,6 @@ async () => {
   //       precision: 3,
   //     })
   //     .catch(() => 'Can not access math server');
-  //   console.log({ math: res });
+  //   console.info({ math: res });
   // }, 1000);
 };

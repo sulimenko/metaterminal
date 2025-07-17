@@ -12,7 +12,7 @@
       api.auth.provider.updatePassword({ login, password });
       console.error('Update password: ', login, password);
     }
-    console.log('Logged user: ', login);
+    console.info('Logged user: ', login);
     const token = api.auth.provider.generateToken();
     const data = { user_id, login };
     context.client.startSession(token, data);

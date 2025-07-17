@@ -3,12 +3,12 @@
   access: 'public',
   // eslint-disable-next-line no-unused-vars
   method: async (symbols) => {
-    console.log('getApiPrice: ', symbols.join(','));
+    console.info('getApiPrice: ', symbols.join(','));
     const prices = [];
     const alpaca = domain.clients.alpaca.getClient({ key: 'main' });
-    // console.log(alpaca);
+    // console.info(alpaca);
     for (const instrument of await alpaca.getSnapshots(symbols)) {
-      //   console.log('instrument: ', instrument);
+      //   console.info('instrument: ', instrument);
       prices.push({
         symbol: instrument.symbol,
         price: instrument.LatestTrade.Price.toFixed(2),

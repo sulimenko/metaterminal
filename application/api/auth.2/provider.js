@@ -6,7 +6,7 @@
   },
 
   async saveSession(token, data) {
-    // console.log({ saveSession: { token, data } });
+    // console.info({ saveSession: { token, data } });
     try {
       await db.pg.update('terminal_tokens', { data: JSON.stringify(data) }, { token });
     } catch (error) {
@@ -16,7 +16,7 @@
 
   async createSession(token, data, fields = {}) {
     const record = { token, data: JSON.stringify(data), ...fields };
-    // console.log({ createSession: record });
+    // console.info({ createSession: record });
     await db.pg.delete('terminal_tokens', { login: data.login, type: fields.type });
     return db.pg.insert('terminal_tokens', record);
   },

@@ -1,5 +1,5 @@
 async ({ symbol, account }) => {
-  // console.log(account, symbols, client);
+  // console.info(account, symbols, client);
 
   const data = domain.marketData.source.getSymbol({ symbol });
   if (data.signers.has(account)) {

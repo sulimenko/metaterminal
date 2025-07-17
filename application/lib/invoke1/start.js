@@ -6,5 +6,5 @@ async () => {
     args: { key: 'value' },
     exclusive: true,
   });
-  console.log('Invoke example', res);
+  console.info('Invoke example', res);
 };

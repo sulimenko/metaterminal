@@ -13,7 +13,7 @@
     setTimeout(async () => {
       domain.marketData.tvClient.client = null;
       const status = await domain.marketData.tvClient.connect();
-      console.log('restart tvClient: ', status);
+      console.info('restart tvClient: ', status);
       // if (status === 'open') {
       // const quoteArray = [];
       // for (const each of domain.marketData.quotes.values.values()) {
@@ -25,7 +25,7 @@
       // for (const each of domain.marketData.charts.values.values()) {
       //   for (const period in each) {
       //     if (each[period].signers.size > 0) {
-      //       console.log('charts', each);
+      //       console.info('charts', each);
       //       domain.marketData.tvClient.client.addChartSymbol({
       //         symbol: each[period].source + ':' + each[period].symbol,
       //         period: each[period].period,

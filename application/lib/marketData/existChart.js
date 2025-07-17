@@ -1,6 +1,6 @@
 ({ userId }) => {
   const existSub = domain.marketData.charts.getChartSigner({ userId });
-  // console.log(existSub);
+  // console.info(existSub);
   if (existSub) {
     if (existSub.signers.size === 1) {
       console.warn('existSub.signers ===1: ', existSub.source, existSub.symbol);

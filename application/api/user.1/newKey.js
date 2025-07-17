@@ -2,7 +2,7 @@
 ({
   access: 'private',
   method: async (data) => {
-    console.log('KEYS :', data);
+    console.info('KEYS :', data);
     return data;
   },
 });

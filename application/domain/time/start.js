@@ -8,10 +8,10 @@ async () => {
         location: 'Kiev',
       })
       .then((time) => {
-        console.log(`${time.timezone} - ${time.datetime}`);
+        console.info(`${time.timezone} - ${time.datetime}`);
       })
       .catch(() => {
-        console.log('Can not access time server');
+        console.info('Can not access time server');
       });
   }, 1000);
 };

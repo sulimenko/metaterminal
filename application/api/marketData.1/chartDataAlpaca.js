@@ -3,7 +3,7 @@
   access: 'public',
   // eslint-disable-next-line no-unused-vars
   method: async ({ symbol, start, end, period = '1d', currency = 'USD', limit = 1500 }) => {
-    console.log('getApiChartData: ', symbol, start, end, period, limit);
+    console.info('getApiChartData: ', symbol, start, end, period, limit);
     const alpaca = domain.clients.alpaca.getClient({ key: 'main' });
     const timeframe = alpaca.newTimeframe(1, alpaca.timeframeUnit.HOUR); // timeframe: alpaca.newTimeframe(15, alpaca.timeframeUnit.MIN),
 
@@ -14,11 +14,11 @@
       limit,
     });
 
-    // console.log('getExternalData: ', bars);
+    // console.info('getExternalData: ', bars);
     const arr = [];
     for await (const bar of bars) {
-      // console.log(symbol + '1H' + bar.Timestamp);
-      // console.log(bar);
+      // console.info(symbol + '1H' + bar.Timestamp);
+      // console.info(bar);
       arr.push({
         close: bar.ClosePrice,
         high: bar.HighPrice,

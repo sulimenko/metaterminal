@@ -7,5 +7,5 @@ async (event) => {
   lib.ptfin
     .sendPost({ method, data })
     .then((result) => console.warn('tn updateStatus result ' + event.account + ': ' + JSON.stringify(result).substring(0, 200)));
-  // return void console.log('sent data: ' + JSON.stringify(data) );
+  // return void console.info('sent data: ' + JSON.stringify(data) );
 };

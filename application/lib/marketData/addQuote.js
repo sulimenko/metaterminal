@@ -1,8 +1,8 @@
 async ({ userId, instruments }) => {
-  // console.log(userId, instruments);
+  // console.info(userId, instruments);
   const quoteArray = [];
   for (const key in instruments) {
-    // console.log(key);
+    // console.info(key);
     if (!['FUT'].includes(instruments[key].asset_category)) {
       const data = domain.marketData.quotes.getQuote({ instrument: instruments[key] });
       if (userId) data.signers.add(userId);

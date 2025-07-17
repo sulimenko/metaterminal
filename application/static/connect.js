@@ -12,7 +12,7 @@ window.addEventListener('load', async () => {
   window.api = window.application.metacom.api;
   await application.metacom.load('alpaca', 'auth', 'example', 'files');
   const token = localStorage.getItem('metarhia.session.token');
-  // console.log(token);
+  // console.info(token);
   let logged = false;
   if (token) {
     const res = await api.auth.restore({ token });

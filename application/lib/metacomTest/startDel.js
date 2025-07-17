@@ -10,7 +10,7 @@ async () => {
         login: 'balex',
         password: 'test',
       });
-      console.log('MetacomTest: ', res);
+      console.info('MetacomTest: ', res);
     }, 1000);
   }, 2000);
 };

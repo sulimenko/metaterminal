@@ -1,7 +1,7 @@
 ({
   access: 'public',
   method: async (needle) => {
-    console.log(needle);
+    console.info(needle);
     if (typeof needle === 'object') needle = needle.data;
     const haystack = await fetch(
       'https://symbol-search.tradingview.com/symbol_search/?text=' + needle,
@@ -25,7 +25,7 @@
       ['NASDAQ', 'NYSE', 'AMEX', 'CBOE', 'OTC', 'LSE', 'LSEIOB1', 'BINANCE'].includes(each.prefix || each.exchange),
     );
     for (const each of list) each.source = each.prefix !== undefined ? each.prefix : each.exchange;
-    // console.log(list);
+    // console.info(list);
     return list;
   },
 });

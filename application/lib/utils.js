@@ -69,7 +69,7 @@
   },
 
   parseCookie(str) {
-    // console.log(str);
+    // console.info(str);
     return str !== null
       ? str
           .split(';')

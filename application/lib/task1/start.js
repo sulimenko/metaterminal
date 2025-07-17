@@ -8,6 +8,6 @@ async () => {
       args: { i: 2 },
       run: 'lib.task1.f1',
     });
-    console.log('Add task', res);
+    console.info('Add task', res);
   }, 1000);
 };

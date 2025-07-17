@@ -1,7 +1,7 @@
 ({
   access: 'private',
   method: async () => {
-    console.log('updateWS');
+    console.info('updateWS');
     await domain.client.tn.restartClients();
     return 'reconnect';
   },

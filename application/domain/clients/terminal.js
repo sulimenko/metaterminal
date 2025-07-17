@@ -9,9 +9,9 @@
       this.cleaningTimers.delete(userId);
     }
 
-    // console.log('listeners close:', client.listeners('close').length);
+    // console.info('listeners close:', client.listeners('close').length);
     for (const func of client.listeners('close')) {
-      // console.log('each:', func.toString());
+      // console.info('each:', func.toString());
       if (func.toString().match(/marketData.existChart/) !== null) client.off('close', func);
     }
 
