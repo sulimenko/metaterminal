@@ -67,7 +67,8 @@
         break;
       case 'data':
         data = domain.marketData.data.getData({ symbol });
-        Object.keys(packet).forEach((key) => (data.data[key] = packet[key]));
+        // Object.keys(packet).forEach((key) => (data.data[key] = packet[key])); // old
+        data.data = { ...packet };
         domain.marketData.data.values.set(symbol, data);
         break;
       default:
