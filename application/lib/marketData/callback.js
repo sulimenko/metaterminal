@@ -55,8 +55,8 @@
       case 'levelI':
         quote = domain.marketData.quotes.getQuote({ instrument: { symbol } });
         // console.info(packet, quote.data, quote);
-        // Object.keys(packet).forEach((key) => (quote.data[key] = packet[key])); // old
-        quote.data = { ...packet };
+        Object.keys(packet).forEach((key) => (quote.data[key] = packet[key])); // old
+        // quote.data = { ...packet };
         // for (const userId of quote.signers) {
         // console.info(userId);
         // let client = domain.clients.terminal.getClient({ userId });
@@ -67,8 +67,8 @@
         break;
       case 'data':
         data = domain.marketData.data.getData({ symbol });
-        // Object.keys(packet).forEach((key) => (data.data[key] = packet[key])); // old
-        data.data = { ...packet };
+        Object.keys(packet).forEach((key) => (data.data[key] = packet[key])); // old
+        // data.data = { ...packet };
         domain.marketData.data.values.set(symbol, data);
         break;
       default:
