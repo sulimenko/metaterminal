@@ -55,7 +55,8 @@
       case 'levelI':
         quote = domain.marketData.quotes.getQuote({ instrument: { symbol } });
         // console.info(packet, quote.data, quote);
-        Object.keys(packet).forEach((key) => (quote.data[key] = packet[key]));
+        // Object.keys(packet).forEach((key) => (quote.data[key] = packet[key])); // old
+        quote.data = { ...packet };
         // for (const userId of quote.signers) {
         // console.info(userId);
         // let client = domain.clients.terminal.getClient({ userId });
