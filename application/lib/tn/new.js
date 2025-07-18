@@ -20,7 +20,7 @@ async ({ account }) => {
       this.timers.heartbeat = setTimeout(() => {
         if (!this.ws || this.ws.readyState !== WebSocket.OPEN) return;
         this.ws.ping();
-        console.warn('send PING ' + this.access.account);
+        console.log('send PING ' + this.access.account);
         this.timers.pong = setTimeout(() => {
           console.info('No PONG ' + this.access.account + ', reconnecting...');
           this.restart();
@@ -36,11 +36,11 @@ async ({ account }) => {
       return new Promise((resolve) => {
         if (!this.ws || this.ws.readyState === WebSocket.CLOSED) resolve();
 
-        console.warn('WS standart close: ' + this.access.account);
+        console.info('WS standart close: ' + this.access.account);
 
         this.ws.removeAllListeners('close');
         this.ws.on('close', () => {
-          console.warn('WS closed ' + this.access.account);
+          console.info('WS closed ' + this.access.account);
           this.ws = null;
           resolve();
         });
@@ -103,18 +103,18 @@ async ({ account }) => {
       });
 
       this.ws.on('ping', () => {
-        console.warn('get PING ' + this.access.account);
+        console.log('get PING ' + this.access.account);
         this.ws.pong();
       });
 
       this.ws.on('pong', () => {
-        console.warn('get PONG ' + this.access.account);
+        console.log('get PONG ' + this.access.account);
         this.heartbeat();
       });
 
       this.ws.on('message', (data) => {
         const [event, messageData] = JSON.parse(data);
-        if (event === 'keepAlive') console.warn('WS keepAlive ' + this.access.account);
+        if (event === 'keepAlive') console.log('WS keepAlive ' + this.access.account);
         else if (event === 'orders') {
           try {
             lib.tn.updateStatus({ account: this.access.account, orders: messageData });
@@ -122,13 +122,13 @@ async ({ account }) => {
             console.error('onmessage error ' + this.access.account, { message: e.message || 'Unknown error' });
           }
           // } else if (event === 'b') {}
-        } else if (event === 'userData') console.warn('userData ' + this.access.account, messageData);
+        } else if (event === 'userData') console.info('userData ' + this.access.account, messageData);
         else console.error('WS new event ' + this.access.account + ' event: ' + event + ': ' + JSON.stringify(messageData));
       });
 
       this.ws.on('close', (event) => {
         this.ws = null;
-        console.warn('WS closed ' + this.access.account + ', code: ' + event.code);
+        console.info('WS closed ' + this.access.account + ', code: ' + event.code);
         this.restart();
       });
 
@@ -140,7 +140,7 @@ async ({ account }) => {
           reconnectAttempts: this.reconnect,
         });
         if (this.ws) {
-          console.warn('WS state before restart ' + this.access.account, {
+          console.info('WS state before restart ' + this.access.account, {
             url: this.ws._url || 'N/A',
             isPaused: this.ws._paused || false,
             bufferedAmount: this.ws._bufferedAmount || 0,

@@ -7,7 +7,7 @@
   requestList: new Set(),
   getQuote({ instrument }) {
     let data = this.values.get(instrument.symbol);
-    // if (instrument.symbol === 'JOBY241115C00005000') console.warn('has quote', data);
+
     if (data === undefined) {
       data = this.values.set(instrument.symbol, this.default({ instrument })).get(instrument.symbol);
       // if (instrument.symbol === 'JOBY241115C00005000') console.warn('new quote', instrument);
