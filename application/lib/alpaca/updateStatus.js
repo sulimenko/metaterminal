@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 async (event) => {
-  const method = 'alpaca/response';
+  const path = 'alpaca/response';
   const result = await metarhia.metautil
-    .fetch(config.ptfin.main.url + method, {
+    .fetch(config.ptfin.main.url + path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

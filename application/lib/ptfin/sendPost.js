@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-async ({ method, data, type = 'application/json' }) => {
+async ({ path, data, type = 'application/json' }) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 25 * 1000); // 25 секунд
 
@@ -8,7 +8,7 @@ async ({ method, data, type = 'application/json' }) => {
   // for (const key of Object.keys(data)) send_data[key] = data[key];
 
   try {
-    const res = await fetch(config.ptfin.main.url + method, {
+    const res = await fetch(config.ptfin.main.url + path, {
       method: 'POST',
       headers: {
         'Content-Type': type,

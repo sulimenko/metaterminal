@@ -75,8 +75,8 @@
     // if (this.onDone) this.onDone(error, res);
     if (this.count === 0 && this.onDrain) this.onDrain();
   },
-  async send({ method, data }, finish) {
+  async send({ path, data }, finish) {
     this.sent++;
-    finish(null, await lib.ptfin.sendPost({ method, data }));
+    finish(null, await lib.ptfin.sendPost({ path, data }));
   },
 });

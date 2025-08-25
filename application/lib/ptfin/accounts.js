@@ -1,7 +1,7 @@
 async ({ userId }) => {
   if (!userId) return {};
-  const method = 'data/accounts';
+  const path = 'data/accounts';
   const data = { user: userId };
 
-  return lib.ptfin.sendPost({ method, data });
+  return lib.ptfin.sendPost({ path, data });
 };

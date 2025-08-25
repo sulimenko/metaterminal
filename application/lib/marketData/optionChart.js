@@ -1,10 +1,10 @@
 async ({ instrument, period, limit }) => {
   console.warn(instrument, period, limit);
-  const method = 'marketdata/barcharts';
+  const path = 'marketdata/barcharts';
   const data = { symbol: lib.utils.makeOptSymbol(instrument.symbol), period, limit: 100 };
 
   // todo: only Get, update to stream
-  const response = await lib.ts.sendPost({ method, data });
+  const response = await lib.ts.sendPost({ path, data });
   if (response === 'error') return { error: true, text: 'error sendPost' };
   if (response.result === undefined || response.result.Bars === undefined || response.result.Bars.length === 0) {
     return { error: true, text: 'No data for this period' };

@@ -1,10 +1,10 @@
 /* eslint-disable no-loop-func */
 async ({ instruments }) => {
   if (instruments.length === 0) return ['empty'];
-  const method = 'marketdata/quotes';
+  const path = 'marketdata/quotes';
   const data = { instruments };
 
-  const response = await lib.ptfin.sendPost({ method, data });
+  const response = await lib.ptfin.sendPost({ path, data });
 
   // console.warn(response);
 

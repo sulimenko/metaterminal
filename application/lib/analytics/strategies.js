@@ -1,6 +1,6 @@
 async ({ user }) => {
-  const method = 'analytics/strategies';
+  const path = 'analytics/strategies';
   const data = { user };
 
-  return lib.ptfin.sendPost({ method, data });
+  return lib.ptfin.sendPost({ path, data });
 };

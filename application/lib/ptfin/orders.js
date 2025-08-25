@@ -1,8 +1,8 @@
 async ({ accounts, days, force }) => {
   if (accounts.includes(null)) return [];
-  const method = 'terminal/orders';
+  const path = 'terminal/orders';
   const data = { accounts, days, force };
-  // console.info(config.ptfin.main.url + method, accounts, days, force);
+  // console.info(config.ptfin.main.url + path, accounts, days, force);
 
-  return lib.ptfin.sendPost({ method, data });
+  return lib.ptfin.sendPost({ path, data });
 };

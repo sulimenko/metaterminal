@@ -1,8 +1,8 @@
 async (account, update = false) => {
-  const method = 'terminal/get_sid';
+  const path = 'terminal/get_sid';
   const data = { account, update };
 
-  const result = await lib.ptfin.sendPost({ method, data });
+  const result = await lib.ptfin.sendPost({ path, data });
   console.info('getSidApi', account, result);
   return result.SID;
 

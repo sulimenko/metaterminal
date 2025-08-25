@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
-async ({ method, data, type = 'application/json' }) => {
+async ({ path, data, type = 'application/json' }) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 25 * 1000); // 25 секунд
 
-  console.info('Sending POST:', config.ts.main.url + ':' + config.ts.main.port + '/api/' + method, data);
+  console.info('Sending POST:', config.ts.main.url + ':' + config.ts.main.port + '/api/' + path, data);
 
   try {
-    const res = await fetch(config.ts.main.url + ':' + config.ts.main.port + '/api/' + method, {
+    const res = await fetch(config.ts.main.url + ':' + config.ts.main.port + '/api/' + path, {
       method: 'POST',
       headers: {
         'Content-Type': type,
