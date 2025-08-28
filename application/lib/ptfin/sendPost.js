@@ -25,6 +25,6 @@ async ({ path, data, type = 'application/json' }) => {
   } catch (error) {
     if (error.name === 'AbortError') console.error('Request aborted by timeout!');
     else console.error('Request error code', error.message);
-    return 'error';
+    return error.message;
   }
 };
