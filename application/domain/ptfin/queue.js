@@ -22,10 +22,14 @@
     this.size = 0;
     this.sent = 0;
   },
-  addTask(task) {
-    this.queue.push({ task, start: Date.now() });
-    this.size++;
-    if (this.queue.length === 1) this.takeNext();
+  finish(error, res) {
+    if (error) {
+      if (this.onFailure) this.onFailure(error, res);
+    } else if (this.onSuccess) {
+      this.onSuccess(res);
+    }
+    if (this.onDone) this.onDone(error, res);
+    if (this.count === 0 && this.onDrain) this.onDrain();
   },
   next(task) {
     this.count++;
@@ -65,15 +69,12 @@
       }
     }
     if (this.count < this.concurrency) this.next(task);
+    else this.queue.unshift({ task, start: Date.now() });
   },
-  finish(error, res) {
-    if (error) {
-      if (this.onFailure) this.onFailure(error, res);
-    } else if (this.onSuccess) {
-      this.onSuccess(res);
-    }
-    // if (this.onDone) this.onDone(error, res);
-    if (this.count === 0 && this.onDrain) this.onDrain();
+  addTask(task) {
+    this.queue.push({ task, start: Date.now() });
+    this.size++;
+    if (this.queue.length === 1) this.takeNext();
   },
   async send({ path, data }, finish) {
     this.sent++;
