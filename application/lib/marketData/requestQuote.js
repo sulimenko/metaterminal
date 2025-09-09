@@ -5,19 +5,9 @@ async ({ instruments }) => {
   const data = { instruments };
 
   const response = await lib.ptfin.sendPost({ path, data });
-
-  // console.warn(response);
-
-  let quoteSymbol = null;
-  let dataSymbol = null;
-  for (const instrument of response) {
-    quoteSymbol = domain.marketData.quotes.getQuote({ instrument });
-    Object.keys(instrument.quote).forEach((key) => (quoteSymbol.data[key] = instrument.quote[key]));
-    domain.marketData.quotes.values.set(instrument.symbol, quoteSymbol);
-
-    dataSymbol = domain.marketData.data.getData({ symbol: instrument.symbol });
-    Object.keys(instrument.data).forEach((key) => (dataSymbol.data[key] = instrument.data[key]));
-    domain.marketData.data.values.set(instrument.symbol, dataSymbol);
+  for (const { symbol, quote, data } of response) {
+    domain.marketData.quotes.addQuote({ instrument: { symbol }, quote });
+    domain.marketData.data.addData({ instrument: { symbol }, data });
   }
 
   return ['ok'];

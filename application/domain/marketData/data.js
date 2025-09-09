@@ -2,13 +2,17 @@
   default: () => {
     return { data: {} };
   },
-  values: new Map(),
-  getData({ symbol }) {
-    let data = this.values.get(symbol);
-    if (data === undefined) data = this.values.set(symbol, this.default()).get(symbol);
+  values: {},
+  getData({ instrument }) {
+    if (instrument?.symbol === undefined) return null;
+    let data = this.values[instrument.symbol];
+    if (data === undefined) data = this.values[instrument.symbol] = this.default();
     return data;
   },
-  setData({ key, data }) {
-    return this.values.set(key, data);
+  addData({ instrument, data }) {
+    if (instrument?.symbol === undefined) return null;
+    const existData = this.getData({ instrument });
+    existData.data = { ...existData.data, ...data };
+    return existData;
   },
 });

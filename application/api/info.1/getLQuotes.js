@@ -2,7 +2,8 @@
 ({
   access: 'public',
   method: async () => {
-    console.warn('lib quotes: ', domain.marketData.tvClient.client.getQuotes());
-    return 'ok';
+    const quotes = domain.marketData.tvClient.client.getQuotes();
+    console.warn('lib quotes: ', quotes);
+    return quotes;
   },
 });
