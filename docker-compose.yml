@@ -1,5 +1,5 @@
 services:
-  metaterminal-api:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
