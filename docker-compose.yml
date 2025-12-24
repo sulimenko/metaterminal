@@ -6,33 +6,16 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: api-example
-    environment:
-      - DB_HOST=pg-example
-      - DB_PORT=5433
     volumes:
       - ./application:/usr/server/application
-    depends_on:
-      - pg-example
+      - ./node_modules:/usr/server/node_modules
     ports:
       - 8000:8000
       - 8001:8001
       - 8002:8002
     restart: always
-
-  pg-example:
-    image: postgres:14.1-alpine3.15
-    container_name: pg-example
-    environment:
-      - POSTGRES_USER=marcus
-      - POSTGRES_PASSWORD=marcus
-      - POSTGRES_DB=application
-    volumes:
-      - ./data/postgres/:/var/lib/postgresql/data
-      - ./database/structure.sql:/docker-entrypoint-initdb.d/1.sql
-      - ./database/data.sql:/docker-entrypoint-initdb.d/2.sql
-    ports:
-      - 5433:5432
-    restart: always
+    env_file:
+      - .env
 
 networks:
   default:
