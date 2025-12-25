@@ -1,5 +1,5 @@
 {
-  "watch": ["server.js", "application", "node_modules"],
+  "watch": ["server.js", "application"],
   "legacyWatch": true,
   "ext": "js,json"
 }
