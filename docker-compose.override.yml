@@ -1,6 +1,8 @@
 services:
   api:
-    command: node --watch server.js
+    command: npm run dev
+    environment:
+      NODE_ENV: development
     volumes:
       - ./application:/usr/server/application
       - ./node_modules:/usr/server/node_modules
