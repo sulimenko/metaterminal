@@ -1,0 +1,6 @@
+services:
+  api:
+    command: node --watch server.js
+    volumes:
+      - ./application:/usr/server/application
+      - ./node_modules:/usr/server/node_modules
