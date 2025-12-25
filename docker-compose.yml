@@ -10,7 +10,10 @@ services:
       - .env
     environment:
       NODE_ENV: production
+    networks:
+      - ptfin-backend
 
 networks:
-  default:
-    name: metaterminal-api-network
+  ptfin-backend:
+    external: true
+    name: ptfin-backend
