@@ -5,7 +5,9 @@
   },
   values: {},
   getQuote({ instrument }) {
-    if (instrument?.symbol === undefined) return null;
+    if (instrument?.symbol === undefined) {
+       return null;
+    }
     let data = this.values[instrument.symbol];
 
     if (data === undefined) {
@@ -15,7 +17,9 @@
       if (!instrument.asset_category) {
         const optionPattern = /^[A-Z]{1,5}(\d{6})[CP]\d{8}$/;
         // console.warn(instrument, optionPattern.test(instrument.symbol));
-        if (optionPattern.test(instrument.symbol)) instrument.asset_category = 'OPT';
+        if (optionPattern.test(instrument.symbol)) {
+          instrument.asset_category = 'OPT';
+        }
       }
       if (instrument.asset_category === 'OPT') {
         data.source = 'TN';
