@@ -3,8 +3,11 @@ services:
     build:
       args:
         NODE_ENV: development
+    ports:
+      - 9229:9229
     command: npm run dev
     environment:
       NODE_ENV: development
+      NODE_OPTIONS: ""
     volumes:
       - ./application:/usr/server/application
