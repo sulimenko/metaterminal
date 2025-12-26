@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 ({
   access: 'public',
-  method: async () => {
+  method: async function () {
+    lib.log.info({ args: Array.from(arguments) });
     const { uuid, session, client } = context;
     const { ip } = client;
     const { token, user_id } = session;

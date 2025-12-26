@@ -1,6 +1,7 @@
 ({
   access: 'public',
-  method: async ({ keys, activityTypes, direction, date, pageSize }) => {
+  method: async function ({ keys, activityTypes, direction, date, pageSize }) {
+    lib.log.info({ args: Array.from(arguments) });
     const alpaca = lib.utils.alpacaConnect(keys);
 
     activityTypes = activityTypes ? activityTypes : undefined; // ['FILL', 'CSD', 'CFEE', 'JNLS']

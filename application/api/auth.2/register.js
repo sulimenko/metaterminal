@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 ({
   access: 'public',
-  method: async ({ user, password }) => {
+  method: async function ({ user, password }) {
+    lib.log.info({ args: Array.from(arguments) });
     const response = await lib.instruction.terminalUser({ user, password });
     if (response.error) {
       if (response.status === 'duplication')

@@ -2,7 +2,8 @@
 ({
   access: 'public',
   // eslint-disable-next-line no-unused-vars
-  method: async (symbols) => {
+  method: async function (symbols) {
+    lib.log.info({ args: Array.from(arguments) });
     console.info('getApiPrice: ', symbols.join(','));
     const prices = [];
     const alpaca = domain.clients.alpaca.getClient({ key: 'main' });

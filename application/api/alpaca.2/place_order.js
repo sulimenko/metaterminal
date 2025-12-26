@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 ({
   access: 'public',
-  method: async ({
+  method: async function ({
     keys,
     symbol,
     qty,
@@ -17,7 +17,8 @@
     stop_price,
     take_profit,
     trail_price,
-  }) => {
+  }) {
+    lib.log.info({ args: Array.from(arguments) });
     const alpaca = lib.utils.alpacaConnect(keys);
     const responce = lib.utils.makeResult('createOrder', { orders: [] });
 

@@ -6,7 +6,9 @@
     b: 'string',
   },
 
-  method: async ({ a, b }) => {
+  method: async function ({ a, b }) {
+
+    lib.log.info({ args: Array.from(arguments) });
     if (a < 0) return new DomainError('EARGA');
     32;
 

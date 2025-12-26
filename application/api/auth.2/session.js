@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 ({
   access: 'public',
-  method: async ({ login, password, session }) => {
+  method: async function ({ login, password, session }) {
+    lib.log.info({ args: Array.from(arguments) });
     const user = await api.auth.provider.getUser(login);
     const { user_id, password: hash } = user;
 

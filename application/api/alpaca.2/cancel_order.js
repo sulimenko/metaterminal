@@ -1,6 +1,7 @@
 ({
   access: 'public',
-  method: async ({ keys, orderId }) => {
+  method: async function ({ keys, orderId }) {
+    lib.log.info({ args: Array.from(arguments) });
     // console.info(keys);
     const alpaca = lib.utils.alpacaConnect(keys);
     const responce = lib.utils.makeResult('cancelOrder', { orders: [] });

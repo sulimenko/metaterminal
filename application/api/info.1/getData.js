@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 ({
   access: 'public',
-  method: async ({ symbols = [] }) => {
+  method: async function ({ symbols = [] }) {
+    lib.log.info({ args: Array.from(arguments) });
     const result = {};
     if (symbols.length === 0) symbols = Object.keys(domain.marketData.data.values);
     for (const symbol of symbols) {

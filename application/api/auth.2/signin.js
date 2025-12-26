@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 ({
   access: 'public',
-  method: async ({ login, password }) => {
+  method: async function ({ login, password }) {
+    lib.log.info({ args: Array.from(arguments) });
     const user = await api.auth.provider.getUser(login);
     // console.info(login, password, user);
     // if (!user) throw new Error('Incorrect login or password');

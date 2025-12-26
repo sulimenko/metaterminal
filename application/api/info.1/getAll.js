@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 ({
   access: 'public',
-  method: async () => {
+  method: async function () {
+    lib.log.info({ args: Array.from(arguments) });
     console.info('quotes: ', domain.marketData.quotes.values);
     console.info('data: ', domain.marketData.data.values);
     // console.info('charts: ', domain.marketData.charts.values);

@@ -1,6 +1,7 @@
 ({
   access: 'private',
-  method: async ({ password }) => {
+  method: async function ({ password }) {
+    lib.log.info({ args: Array.from(arguments) });
     const user = await api.auth.provider.getUser(context.client.session.state.login);
     const valid = await metarhia.metautil.validatePassword(password.old, user.password);
     if (!valid) return { error: true, status: 'error', text: 'Неверный пароль' };

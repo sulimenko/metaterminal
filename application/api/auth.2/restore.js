@@ -1,7 +1,9 @@
 ({
   access: 'public',
 
-  method: async ({ token }) => {
+  method: async function ({ token }) {
+
+    lib.log.info({ args: Array.from(arguments) });
     // eslint-disable-next-line eqeqeq
     if (token == null || token === '') return { status: 'not logged' };
 

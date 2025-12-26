@@ -2,7 +2,8 @@
 /* eslint-disable no-undef */
 ({
   access: 'public',
-  method: async ({ symbol, status, type }) => {
+  method: async function ({ symbol, status, type }) {
+    lib.log.info({ args: Array.from(arguments) });
     // console.info(symbol, status, type);
     const responce = lib.utils.makeResult('assets', { samples: [] });
 

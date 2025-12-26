@@ -1,6 +1,7 @@
 ({
   access: 'public',
-  method: async (needle) => {
+  method: async function (needle) {
+    lib.log.info({ args: Array.from(arguments) });
     console.info(needle);
     if (typeof needle === 'object') needle = needle.data;
     const haystack = await fetch(

@@ -2,7 +2,8 @@
 /* eslint-disable camelcase */
 ({
   access: 'public',
-  method: async ({ keys, start, end, period, timeframe, extended }) => {
+  method: async function ({ keys, start, end, period, timeframe, extended }) {
+    lib.log.info({ args: Array.from(arguments) });
     const alpaca = lib.utils.alpacaConnect(keys);
 
     date_start = start ? start : undefined;
