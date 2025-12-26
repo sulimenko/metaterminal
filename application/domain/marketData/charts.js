@@ -8,12 +8,15 @@
       signers: new Set(),
     };
   },
+
   values: new Map(),
+
   getSymbol({ instrument }) {
     let data = this.values.get(instrument.symbol);
     if (data === undefined) data = this.values.set(instrument.symbol, {}).get(instrument.symbol);
     return data;
   },
+
   getChart({ instrument, period, limit = 1000 }) {
     let chart = this.getSymbol({ instrument });
     if (chart[period] === undefined) {
@@ -28,6 +31,7 @@
     }
     return chart[period];
   },
+
   deleteChart({ instrument, period }) {
     const chart = this.getSymbol({ instrument });
     if (domain.marketData.tvClient.client !== null) {
@@ -36,6 +40,7 @@
     if (Object.keys(chart).length < 2) return void this.values.delete(instrument.symbol);
     return void delete chart[period];
   },
+
   getChartSigner({ userId }) {
     if (userId) {
       for (const [key, value] of this.values.entries()) {
