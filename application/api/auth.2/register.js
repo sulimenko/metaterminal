@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function ({ user, password }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     const response = await lib.instruction.terminalUser({ user, password });
     if (response.error) {
       if (response.status === 'duplication')

@@ -3,7 +3,7 @@
 
   method: async function ({ token }) {
 
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     // eslint-disable-next-line eqeqeq
     if (token == null || token === '') return { status: 'not logged' };
 

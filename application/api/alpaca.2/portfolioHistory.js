@@ -3,7 +3,7 @@
 ({
   access: 'public',
   method: async function ({ keys, start, end, period, timeframe, extended }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     const alpaca = lib.utils.alpacaConnect(keys);
 
     date_start = start ? start : undefined;

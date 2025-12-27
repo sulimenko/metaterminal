@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function () {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     for (const [key, value] of domain.marketData.charts.values.entries()) {
       console.warn(key, value);
       // for (const key of Object.keys(value)) {

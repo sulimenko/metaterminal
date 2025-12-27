@@ -3,7 +3,7 @@
   access: 'public',
   // eslint-disable-next-line no-unused-vars
   method: async function ({ symbol, start, end, period = '1d', currency = 'USD', limit = 1500 }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     console.info('getApiChartData: ', symbol, start, end, period, limit);
     const alpaca = domain.clients.alpaca.getClient({ key: 'main' });
     const timeframe = alpaca.newTimeframe(1, alpaca.timeframeUnit.HOUR); // timeframe: alpaca.newTimeframe(15, alpaca.timeframeUnit.MIN),

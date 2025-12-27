@@ -1,7 +1,7 @@
 ({
   access: 'public',
   method: async function ({ symbols }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     const data = {};
     for (const symbol of symbols) {
       data[symbol] = await domain.marketData.data.getData({ instrument: { symbol } }).data;

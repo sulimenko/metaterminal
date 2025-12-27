@@ -1,7 +1,7 @@
 ({
   access: 'private',
   method: async function ({ symbol }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     // console.info('expiration:', symbol);
     const expirations = await lib.ptfin.optionExpirations({ symbol });
     // console.info('expiration return:', expirations);

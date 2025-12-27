@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function ({ userId }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     console.warn(domain.marketData.charts.getChartSigner({ userId }));
     return 'OK';
   },

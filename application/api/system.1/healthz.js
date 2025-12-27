@@ -1,7 +1,7 @@
 ({
   access: 'public',
   method: async function () {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     return {
       status: 'ok',
       uptime: process.uptime(),

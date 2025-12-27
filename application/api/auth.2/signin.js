@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function ({ login, password }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     const user = await api.auth.provider.getUser(login);
     // console.info(login, password, user);
     // if (!user) throw new Error('Incorrect login or password');

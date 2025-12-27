@@ -3,7 +3,7 @@
 ({
   access: 'public',
   method: async function ({ symbol, status, type }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     // console.info(symbol, status, type);
     const responce = lib.utils.makeResult('assets', { samples: [] });
 

@@ -1,7 +1,7 @@
 ({
   access: 'public',
   method: async function ({ instrument, end }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     // console.info('forceDataSymbol1', instrument);
     if (end === undefined) end = new Date().getTime() + 1000;
     const data = await api.marketData.getDataSymbols({ symbols: [instrument.symbol] });

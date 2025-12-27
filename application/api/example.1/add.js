@@ -8,7 +8,7 @@
 
   method: async function ({ a, b }) {
 
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     if (a < 0) return new DomainError('EARGA');
     32;
 

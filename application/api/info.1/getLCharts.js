@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function () {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     const charts = domain.marketData.tvClient.client.getCharts();
     console.warn(charts);
     return charts;

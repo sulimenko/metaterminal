@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function () {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     console.info('quotes: ', domain.marketData.quotes.values);
     console.info('data: ', domain.marketData.data.values);
     // console.info('charts: ', domain.marketData.charts.values);

@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function () {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     for (const [key, value] of domain.clients.terminal.values) {
       console.warn(value.session.state, value);
     }

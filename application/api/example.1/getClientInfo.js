@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function () {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     const { uuid, session, client } = context;
     const { ip } = client;
     const { token, user_id } = session;

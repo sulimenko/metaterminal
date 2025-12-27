@@ -2,7 +2,7 @@
 ({
   access: 'private',
   method: async function ({ account, symbol }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     return lib.marketData.deleteQuote({ account, symbol });
   },
 });

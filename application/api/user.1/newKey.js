@@ -2,7 +2,7 @@
 ({
   access: 'private',
   method: async function (data) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     console.info('KEYS :', data);
     return data;
   },

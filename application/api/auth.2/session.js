@@ -2,7 +2,7 @@
 ({
   access: 'public',
   method: async function ({ login, password, session }) {
-    lib.log.info({ args: Array.from(arguments) });
+    lib.log.info({ params: arguments[0] });
     const user = await api.auth.provider.getUser(login);
     const { user_id, password: hash } = user;
 
