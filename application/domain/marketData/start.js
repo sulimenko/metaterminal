@@ -1,5 +1,6 @@
 async () => {
-  if (application.worker.id !== 'W2') return;
+  // не нужна проверка на воркеры, если он один 
+  // if (application.worker.id !== 'W2') return;
   // for (const type of ['paper', 'main']) {
   //   domain.clients.alpaca.setClient({ key: type });
   // }
