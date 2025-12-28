@@ -3,6 +3,14 @@
   "configurations": [
     {
       "type": "node",
+      "runtimeExecutable": "node",
+      "request": "launch",
+      "name": "Запустить программу",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/server.js"
+    },
+    {
+      "type": "node",
       "request": "attach",
       "name": "Attach to Docker (Node)",
       "address": "localhost",
