@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 async ({ symbol }) => {
-  return domain.marketData.quotes.getQuote({ instrument: { symbol } }).data;
+  // return (await domain.marketData.quotes.getQuote({ instrument: { symbol } })).value;
 };

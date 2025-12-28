@@ -81,15 +81,6 @@
       : {};
   },
 
-  makeOptSymbol(symbol) {
-    const pattern = /^([A-Za-z]{1,5})(\d{6})([CP])(\d{8})$/;
-    const matches = symbol.match(pattern);
-    if (matches) {
-      return matches[1] + ' ' + matches[2] + matches[3] + parseFloat(matches[4].substr(0, 5) + '.' + matches[4].substr(5, 3));
-    }
-    return null;
-  },
-
   makeTsBar(bar) {
     return {
       open: bar.Open,
@@ -100,20 +91,4 @@
       volume: bar.TotalVolume,
     };
   },
-
-  // async get({ url }) {
-  //   return new Promise((resolve) => {
-  //     const protocol = url.indexOf('https:') === -1 ? node.http : node.https;
-  //     let body = '';
-  //
-  //     protocol.get(url, (res) => {
-  //       res.on('data', (chunk) => {
-  //         body += chunk;
-  //       });
-  //       res.on('end', () => {
-  //         resolve(body);
-  //       });
-  //     });
-  //   });
-  // },
 });

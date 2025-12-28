@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-case-declarations */
 (name, packet) => {
   // console.info('result: ', packet);
@@ -31,6 +32,10 @@
           for (const bar of packet.chart) {
             chart.data.full.push({ ...bar });
           }
+          // api.example.redisSet({
+          //   key: ['chart', source, symbol, packet.period].join(':'),
+          //   value: JSON.stringify({ full: chart.data.full, last: chart.data.last }),
+          // });
           // console.info('chartLength2 > 1: ', chartLength);
           // console.table(chart.data);
         }
@@ -47,10 +52,22 @@
         // console.info('chart_update: ', packet.chart, chart.data.last);
         break;
       case 'levelI':
-        domain.marketData.quotes.addQuote({ instrument: { symbol }, quote: packet });
+        const { bid, ask, bid_size, ask_size } = packet;
+        if (parseFloat(bid) > 0 && parseFloat(ask) > 0) {
+          domain.marketData.quotes.getQuote({ instrument: { symbol } }).then((quote) => {
+            const book = {};
+            if (Object.keys(quote.book).length > 0) {
+              for (const each of Object.keys(quote.book)) book[each] = { price: each, type: 'delete', size: 0 };
+            }
+            book[ask.toString()] = { price: parseFloat(ask), type: 'ask', size: ask_size };
+            book[bid.toString()] = { price: parseFloat(bid), type: 'bid', size: bid_size };
+            for (const key of Object.keys(book)) quote.addBook(book[key]);
+          });
+        }
         break;
       case 'data':
-        domain.marketData.data.addData({ instrument: { symbol }, data: packet });
+        domain.marketData.quotes.getQuote({ instrument: { symbol, source } }).then((quote) => quote.addData(packet));
+        // domain.marketData.quote.addData({ instrument: { symbol, source }, data: packet });
         break;
       default:
         console.error({ errorPacket: packet });

@@ -1,7 +1,8 @@
 async ({ instrument, period, limit }) => {
   console.warn(instrument, period, limit);
   const path = 'marketdata/barcharts';
-  const data = { symbol: lib.utils.makeOptSymbol(instrument.symbol), period, limit: 100 };
+  // const data = { symbol: lib.utils.makeTSOptionSymbol(instrument.symbol), period, limit: 100 };
+  const data = { instrument, period, limit: 100 };
 
   // todo: only Get, update to stream
   const response = await lib.ts.sendPost({ path, data });
