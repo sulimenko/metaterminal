@@ -11,7 +11,9 @@ services:
     environment:
       NODE_ENV: production
     networks:
-      - ptfin-backend
+      ptfin-backend:
+        aliases:
+         - metaterminal.ptfin.local
 
 networks:
   ptfin-backend:
