@@ -20,6 +20,7 @@
     "types": "tsc",
     "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
     "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
+    "dev": "nodemon --inspect=0.0.0.0:9229 server.js",
     "db": "metasql c"
   },
   "engines": {
@@ -35,13 +36,14 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "metatests": "^0.8.2",
+    "nodemon": "^3.1.4",
     "prettier": "^2.8.7",
     "typescript": "^5.1.6"
   },
   "dependencies": {
     "@alpacahq/alpaca-trade-api": "^3.0.1",
     "impress": "^3.0.13",
-    "market-data-tradingview-ws": "^0.1.0",
+    "market-data-tradingview-ws": "^0.1",
     "metasql": "^3.0.0-alpha.2",
     "pg": "^8.11.1",
     "redis": "^4.6.10",
