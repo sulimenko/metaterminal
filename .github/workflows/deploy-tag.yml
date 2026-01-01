@@ -32,13 +32,13 @@ jobs:
       - name: Sync source to server
         run: |
           rsync -az --delete \
-            --exclude ".github" \
-            --exclude ".vscode" \
-            --exclude "backup" \
-            --exclude "vendor" \
-            --exclude "node_modules" \
-            --exclude "docker-compose.override.yml" \
-            --exclude ".env" \
+            --exclude "/.github" \
+            --exclude "/.vscode" \
+            --exclude "/backup" \
+            --exclude "/vendor" \
+            --exclude "/node_modules" \
+            --exclude "/docker-compose.override.yml" \
+            --exclude "/.env" \
             ./ "${{ vars.TEST_DEPLOY_USER }}@${{ vars.TEST_DEPLOY_HOST }}:${{ vars.TEST_DEPLOY_PATH }}/"
 
       - name: Build and run on server
