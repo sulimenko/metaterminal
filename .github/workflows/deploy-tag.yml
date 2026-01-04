@@ -23,6 +23,13 @@ jobs:
           VERSION="${GITHUB_REF_NAME#v}"
           npm version --no-git-tag-version "$VERSION"
 
+      - name: Write build info
+        shell: bash
+        run: |
+          GIT_HASH="$(git rev-parse HEAD)"
+          VERSION="$(node -p "require('./package.json').version")"
+          printf '{\n  "version": "%s",\n  "hash": "%s"\n}\n' "$VERSION" "$GIT_HASH" > build-info.json
+
       - name: Add SSH key (base64)
         run: |
           mkdir -p ~/.ssh
