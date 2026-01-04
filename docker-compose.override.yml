@@ -8,6 +8,6 @@ services:
     command: npm run dev
     environment:
       NODE_ENV: development
-      NODE_OPTIONS: ""
+      NODE_OPTIONS: ''
     volumes:
       - ./application:/usr/server/application

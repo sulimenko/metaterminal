@@ -2,7 +2,7 @@ name: Deploy Test System
 on:
   push:
     tags:
-      - "*"
+      - '*'
 
 jobs:
   deploy:

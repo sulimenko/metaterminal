@@ -13,7 +13,7 @@ services:
     networks:
       ptfin-backend:
         aliases:
-         - metaterminal.ptfin.local
+          - metaterminal.ptfin.local
 
 networks:
   ptfin-backend:
