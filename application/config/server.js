@@ -1,5 +1,5 @@
 ({
-  host: process.env.host || '0.0.0.0',  
+  host: process.env.host || '0.0.0.0',
   protocol: process.env.protocol || 'http',
   ports: [8000],
   nagle: false,

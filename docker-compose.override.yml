@@ -5,9 +5,10 @@ services:
         NODE_ENV: development
     ports:
       - 9229:9229
+      - 8000:8000
     command: npm run dev
     environment:
       NODE_ENV: development
-      NODE_OPTIONS: ""
+      NODE_OPTIONS: ''
     volumes:
       - ./application:/usr/server/application

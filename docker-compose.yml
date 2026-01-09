@@ -3,15 +3,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - 8000:8000
     restart: always
     env_file:
       - .env
     environment:
       NODE_ENV: production
     networks:
-      - ptfin-backend
+      ptfin-backend:
+        aliases:
+          - metaterminal.ptfin.local
 
 networks:
   ptfin-backend:
