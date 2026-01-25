@@ -8,7 +8,8 @@ async ({ path, data, type = 'application/json' }) => {
   // for (const key of Object.keys(data)) send_data[key] = data[key];
 
   try {
-    const res = await fetch(config.ptfin.main.url + path, {
+    const address = config.ptfin.main.url + path;
+    const res = await fetch(address, {
       method: 'POST',
       signal: controller.signal,
       headers: {
