@@ -24,8 +24,11 @@ async ({ path, data, type = 'application/json' }) => {
     const response = res.status === 200 ? await res.json() : await res.text();
     return response;
   } catch (error) {
-    if (error.name === 'AbortError') console.error('Request aborted by timeout!');
-    else console.error('Request error code', error.message);
+    if (error.name === 'AbortError') {
+      console.error('Request aborted by timeout!');
+    } else {
+      console.error('Request error code', error.message);
+    }
     return error.message;
   }
 };
