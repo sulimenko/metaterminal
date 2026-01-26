@@ -15,40 +15,61 @@
     packet.source = source;
     let chart = null;
     switch (name) {
-      case 'chart_history':
-        chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
+      case 'chart_history': {
+        const noSubscribe = packet.__fromStream || !domain.marketData.tvClient.client;
+        chart = domain.marketData.charts.getChart({
+          instrument: { symbol, source },
+          period: packet.period,
+          noSubscribe,
+        });
         // console.warn('chart_history: ', source, symbol, packet.period, packet.chart.length); // packet.chart);
-        const chartLength = packet.chart.length;
-        if (chartLength === 1) {
-          // console.info('chartLength1 === 1: ', chartLength);
-          // console.table(chart.data);
-          chart.data.full.push({ ...chart.data.last });
-          chart.data.last = { ...packet.chart[0] };
-          // console.info('chartLength2 === 1: ', chartLength);
-          // console.table(chart.data);
-        } else if (chartLength > 1) {
-          // console.info('chartLength1 >1: ', chartLength);
-          // console.table('chart :', chart.data);
-          chart.data.full = [];
-          chart.data.last = { ...packet.chart.pop() };
-          for (const bar of packet.chart) {
-            chart.data.full.push({ ...bar });
+        const update = async () => {
+          try {
+            const data = await lib.marketData.redisChart.get({ symbol, source, period: packet.period });
+            const chartLength = packet.chart.length;
+            if (chartLength === 1) {
+              data.full.push({ ...data.last });
+              data.last = { ...packet.chart[0] };
+            } else if (chartLength > 1) {
+              data.full = [];
+              data.last = { ...packet.chart[chartLength - 1] };
+              for (const bar of packet.chart.slice(0, -1)) {
+                data.full.push({ ...bar });
+              }
+            }
+            await lib.marketData.redisChart.set({ symbol, source, period: packet.period, data });
+          } catch (err) {
+            console.warn('Redis chart update failed:', err.message);
           }
-          // console.info('chartLength2 > 1: ', chartLength);
-          // console.table(chart.data);
-        }
+        };
+        void update();
         break;
-      case 'chart_update':
-        chart = domain.marketData.charts.getChart({ instrument: { symbol, source }, period: packet.period });
+      }
+      case 'chart_update': {
+        const noSubscribe = packet.__fromStream || !domain.marketData.tvClient.client;
+        chart = domain.marketData.charts.getChart({
+          instrument: { symbol, source },
+          period: packet.period,
+          noSubscribe,
+        });
         // console.warn('chart_update: ', source, symbol, packet.period, packet.chart.length, packet); // packet.chart);
         for (const userId of chart.signers) {
           domain.clients.terminal
             .getClient({ userId })
             .emit('marketData/chart_update', { chart: { last: packet.chart[0] }, symbol, userId });
         }
-        chart.data.last = packet.chart[0];
-        // console.info('chart_update: ', packet.chart, chart.data.last);
+        const update = async () => {
+          try {
+            const data = await lib.marketData.redisChart.get({ symbol, source, period: packet.period });
+            data.last = packet.chart[0];
+            await lib.marketData.redisChart.set({ symbol, source, period: packet.period, data });
+          } catch (err) {
+            console.warn('Redis chart update failed:', err.message);
+          }
+        };
+        void update();
         break;
+      }
       case 'levelI':
         domain.marketData.quotes.addQuote({ instrument: { symbol }, quote: packet });
         break;

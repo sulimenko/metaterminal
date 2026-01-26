@@ -14,13 +14,15 @@
     if (data === undefined) data = this.values.set(instrument.symbol, {}).get(instrument.symbol);
     return data;
   },
-  getChart({ instrument, period, limit = 1000 }) {
+  getChart({ instrument, period, limit = 1000, noSubscribe = false }) {
     let chart = this.getSymbol({ instrument });
     if (chart[period] === undefined) {
       chart[period] = this.default({ instrument, period });
-      if (instrument.asset_category === 'OPT') {
+      if (noSubscribe) {
+        // Skip subscriptions for non-owner workers (data comes from Redis)
+      } else if (instrument.asset_category === 'OPT') {
         lib.marketData.optionChart({ instrument, period, limit });
-      } else {
+      } else if (domain.marketData.tvClient.client) {
         domain.marketData.tvClient.client.addChartSymbol({ symbol: instrument.source + ':' + instrument.symbol, period, limit });
       }
       this.values.set(instrument.symbol, chart);
