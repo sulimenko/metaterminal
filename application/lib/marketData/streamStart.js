@@ -44,7 +44,18 @@ async () => {
           }
         }
       } catch (err) {
-        console.warn('Redis stream read failed:', err.message);
+        const msg = err?.message || String(err);
+        if (msg.includes('NOGROUP')) {
+          try {
+            await reader.xGroupCreate(stream, group, '0', { MKSTREAM: true });
+          } catch (createErr) {
+            if (!createErr?.message?.includes('BUSYGROUP')) {
+              console.warn('Redis stream group recreate failed:', createErr.message);
+            }
+          }
+        } else {
+          console.warn('Redis stream read failed:', msg);
+        }
         await lib.utils.wait(1000);
       }
     }
