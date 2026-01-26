@@ -8,6 +8,8 @@ services:
       - .env
     environment:
       NODE_ENV: production
+    volumes:
+      - ./log:/usr/server/log
     networks:
       ptfin-backend:
         aliases:
