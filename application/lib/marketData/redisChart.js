@@ -1,8 +1,10 @@
+// Build Redis key for a chart payload.
 const chartKey = ({ symbol, source, period }) => {
   const prefix = process.env.redis_chart_prefix || 'marketData:chart';
   return `${prefix}:${source}:${symbol}:${period}`;
 };
 
+// Ensure chart data has stable shape for consumers.
 const normalize = (data) => {
   const result = data && typeof data === 'object' ? data : {};
   if (!Array.isArray(result.full)) result.full = [];
@@ -10,6 +12,7 @@ const normalize = (data) => {
   return result;
 };
 
+// Read chart data from Redis; returns empty shape on miss/parse errors.
 const get = async ({ symbol, source, period }) => {
   const client = lib.redis?.client;
   if (!client || !client.isOpen) return { full: [], last: {} };
@@ -23,6 +26,7 @@ const get = async ({ symbol, source, period }) => {
   }
 };
 
+// Write chart data to Redis; no-op if Redis is unavailable.
 const set = async ({ symbol, source, period, data }) => {
   const client = lib.redis?.client;
   if (!client || !client.isOpen) return;
