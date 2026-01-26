@@ -38,8 +38,10 @@
     const existQuote = this.getQuote({ instrument });
     existQuote.data = { ...existQuote.data, ...quote };
     for (const userId of existQuote.signers) {
+      const { symbol, source, ...book } = existQuote.data;
       const client = domain.clients.terminal.getClient({ userId });
-      if (client) client.emit('marketData/quote', existQuote.data);
+      // if (client) client.emit('marketData/quote', existQuote.data);
+      if (client) client.emit('marketData/quote', { instrument: { symbol, source }, source, book });
     }
     return existQuote;
   },
