@@ -1,1 +1,5 @@
 application/tasks/
+package-lock.json
+node_modules
+log
+nodemon.json
