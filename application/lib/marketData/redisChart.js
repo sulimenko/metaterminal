@@ -33,6 +33,9 @@ const set = async ({ symbol, source, period, data }) => {
   const key = chartKey({ symbol, source, period });
   const payload = JSON.stringify(normalize(data));
   await client.set(key, payload);
+  const basePeriod = Number(period);
+  const ttlSeconds = Number.isFinite(basePeriod) && basePeriod > 0 ? basePeriod * 2 : 3600;
+  await client.expire(key, Math.ceil(ttlSeconds));
 };
 
 ({ chartKey, get, set });
