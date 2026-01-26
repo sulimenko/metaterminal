@@ -6,6 +6,9 @@
   } else if (['session', 'series', 'symbol', 'quote'].includes(name)) {
     if (name === 'session') console.warn(name, packet);
   } else {
+    if ((name === 'chart_history' || name === 'chart_update') && !packet.__fromStream) {
+      lib.marketData.streamPublish({ name, packet });
+    }
     // packet = JSON.parse(packet);
     const [source, symbol] = packet.symbol.split(':');
     packet.symbol = symbol;
