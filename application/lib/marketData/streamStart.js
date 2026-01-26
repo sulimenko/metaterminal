@@ -1,3 +1,9 @@
+/**
+ * Start Redis stream consumer for chart events and apply them locally.
+ * Waits for Redis connection, ensures consumer group exists, then
+ * reads messages in a blocking loop and forwards them to marketData.callback.
+ * @returns {Promise<void>}
+ */
 async () => {
   let client = lib.redis?.client;
   for (let i = 0; i < 60; i++) {
@@ -20,6 +26,10 @@ async () => {
   const reader = client.duplicate();
   await reader.connect();
 
+  /**
+   * Blocking read loop for the Redis stream.
+   * @returns {Promise<void>}
+   */
   const loop = async () => {
     while (true) {
       try {

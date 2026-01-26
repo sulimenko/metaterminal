@@ -1,3 +1,11 @@
+/**
+ * Publish chart events into Redis stream for cross-worker sync.
+ * Applies optional MAXLEN trimming to avoid unbounded growth.
+ * @param {object} params
+ * @param {string} params.name - Event name (e.g. chart_history/chart_update).
+ * @param {object} params.packet - Event payload to serialize.
+ * @returns {Promise<void>}
+ */
 async ({ name, packet }) => {
   const client = lib.redis?.client;
   if (!client || !client.isOpen) return;
