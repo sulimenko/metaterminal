@@ -1,4 +1,17 @@
 async () => {
+  // Если redis_disabled=1, то не подключаемся к редису и сразу выходим (сценарий тестового запуска)
+  if (process.env['redis_disabled'] === '1') {
+    if (application.worker.id === 'W1') {
+      console.warn('Redis disabled by env (redis_disabled=1)');
+    }
+    db.redis.client = null;
+    if (!lib.redis) {
+      lib.redis = {};
+    }
+    lib.redis.client = null;
+    return;
+  }
+
   if (application.worker.id === 'W1') {
     console.debug('Connect to redis');
   }

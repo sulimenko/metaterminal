@@ -3,6 +3,9 @@
 const http = require('node:http');
 const assert = require('node:assert').strict;
 
+// Отключаем редис для смоуктеста
+process.env['redis_disabled'] = '1';
+
 require('impress');
 
 const HOST = '127.0.0.1';
