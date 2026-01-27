@@ -27,7 +27,7 @@ async () => {
   await reader.connect();
 
   /**
-   * Блокирующий цикл чтения сообщений из Redis stream.
+   * Blocking read loop for the Redis stream.
    * @returns {Promise<void>}
    */
   const loop = async () => {
