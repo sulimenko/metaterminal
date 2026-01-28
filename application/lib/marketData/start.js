@@ -1,5 +1,5 @@
 async () => {
-  if (application.worker.id === 'W2') {
+  if (application.worker.id === 'W1') {
     console.info('start lib.marketData');
     setInterval(() => {
       // console.info('start lib.marketData:', Object.keys(domain.marketData.quotes.values));

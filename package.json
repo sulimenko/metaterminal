@@ -20,6 +20,7 @@
     "types": "tsc",
     "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
     "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
+    "dev": "nodemon --inspect=0.0.0.0:9229 server.js",
     "db": "metasql c"
   },
   "engines": {
@@ -35,6 +36,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "metatests": "^0.8.2",
+    "nodemon": "^3.1.4",
     "prettier": "^2.8.7",
     "typescript": "^5.1.6"
   },

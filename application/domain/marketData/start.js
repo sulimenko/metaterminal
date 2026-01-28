@@ -1,5 +1,5 @@
 async () => {
-  if (application.worker.id !== 'W2') return;
+  if (application.worker.id !== 'W1') return;
   // for (const type of ['paper', 'main']) {
   //   domain.clients.alpaca.setClient({ key: type });
   // }

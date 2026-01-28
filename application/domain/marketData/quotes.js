@@ -61,6 +61,26 @@
     }
     return data;
   },
+  // getQuoteSigner({ userId }) {
+  //   for (const symbol of Object.keys(this.values)) {
+  //     if (this.values[symbol].signers.has(userId)) {
+  //       return { symbol, value: this.values[symbol] };
+  //     }
+  //   }
+  //   return null;
+  // },
+  // addQuote({ instrument, quote }) {
+  //   if (instrument?.symbol === undefined) return null;
+  //   const existQuote = this.getQuote({ instrument });
+  //   existQuote.data = { ...existQuote.data, ...quote };
+  //   for (const userId of existQuote.signers) {
+  //     const { symbol, source, ...book } = existQuote.data;
+  //     const client = domain.clients.terminal.getClient({ userId });
+  //     // if (client) client.emit('marketData/quote', existQuote.data);
+  //     if (client) client.emit('marketData/quote', { instrument: { symbol, source }, source, book });
+  //   }
+  //   return existQuote;
+  // },
   async gracefulStop({ userId, instrument }) {
     const quote = this.values[instrument.symbol];
     quote.signers.delete(userId);

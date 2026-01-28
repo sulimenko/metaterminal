@@ -8,11 +8,11 @@ async ({ path, data, type = 'application/json' }) => {
   try {
     const res = await fetch(config.ts.main.url + ':' + config.ts.main.port + '/api/' + path, {
       method: 'POST',
+      signal: controller.signal,
       headers: {
         'Content-Type': type,
         // Authorization: 'Bearer ' + config.ptfin.main.token,
         // , 'Accept-Encoding': 'deflate, gzip, br, zstd'
-        signal: controller.signal,
       },
       body: JSON.stringify(data),
     });

@@ -1,6 +1,6 @@
 ({
   access: 'private',
-  method: async ({ symbols, expirations }) => {
-    return lib.ptfin.getOptions({ symbols, expirations });
+  method: async ({ instrument, expiration }) => {
+    return lib.ptfin.getOptions({ instrument, expiration });
   },
 });

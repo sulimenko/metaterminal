@@ -1,7 +1,7 @@
-async ({ symbols, expirations }) => {
+async ({ instrument, expiration }) => {
   // if (!Array.isArray(accounts)) return {};
   const path = 'terminal/get_options';
-  const data = { symbols, expirations };
+  const data = { instrument, expiration };
 
   const responce = await lib.ptfin.sendPost({ path, data });
   const result = {};
