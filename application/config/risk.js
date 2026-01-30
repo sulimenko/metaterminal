@@ -1,0 +1,27 @@
+({
+  sources: [
+    { name: 'itiger', url: 'https://www.itiger.com/sg/bulletin/ptp', columns: { symbol: 0, isin: 1 } },
+    {
+      name: 'exante',
+      url: 'https://support.exante.eu/en/articles/114072-withholding-on-publicly-traded-partnerships',
+      columns: { symbol: 1, isin: 2 },
+    },
+  ],
+  redis: {
+    key: 'risk:1446f:exclusions',
+  },
+  min: {
+    tickers: 20,
+    isins: 20,
+  },
+  cache: {
+    ttlMs: 60 * 1000,
+  },
+  fetch: {
+    timeoutMs: 20 * 1000,
+    userAgent: 'metaterminal-risk/1.0',
+  },
+  parsing: {
+    maxTickerLength: 10,
+  },
+});
