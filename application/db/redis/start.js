@@ -13,20 +13,22 @@ async () => {
   }
 
   if (application.worker.id === 'W1') {
-    console.debug('Connect to redis');
+    console.info('Connect to redis');
   }
   const url = process.env.redis_url;
-  const client = url ? npm.redis.createClient({ url }) : npm.redis.createClient();
+  const client = url ? npm.redis.createClient({ url }) : npm.redis.createClient(config.redis);
   db.redis.client = client;
   if (!lib.redis) {
     lib.redis = {};
   }
   lib.redis.client = client;
-  client.on('error', () => {
+  client.on('error', async (error) => {
     if (application.worker.id === 'W1') {
       console.warn('No redis service detected, so quit client');
+      const err = new Error('No redis', { cause: error });
+      console.error(err);
+      await client.disconnect();
     }
-    client.quit();
   });
   try {
     await client.connect();
