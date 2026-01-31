@@ -11,6 +11,10 @@
     key: 'risk:1446f:exclusions',
     ttlSec: 24 * 60 * 60,
   },
+  scheduler: {
+    enabled: true,
+    at: '23h',
+  },
   min: {
     symbols: 20,
     isins: 20,

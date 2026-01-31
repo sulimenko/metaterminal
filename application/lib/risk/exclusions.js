@@ -74,7 +74,11 @@
       console.warn('risk exclusions: redis get failed', error?.message || error);
     }
 
-    if (!raw) return emptySnapshot();
+    if (!raw) {
+      await lib.risk.updateExclusions();
+      raw = await db.redis.get(key);
+      if (!raw) return emptySnapshot();
+    }
 
     let payload = null;
     try {
