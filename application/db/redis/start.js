@@ -16,7 +16,7 @@ async () => {
     console.info('Connect to redis');
   }
   const url = process.env.redis_url;
-  const client = url ? npm.redis.createClient({ url }) : npm.redis.createClient(config.redis);
+  const client = url ? npm.redis.createClient({ url }) : npm.redis.createClient(config.defaultRedisConfig);
   db.redis.client = client;
   if (!lib.redis) {
     lib.redis = {};
