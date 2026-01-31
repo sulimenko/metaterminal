@@ -1,14 +1,16 @@
 (() => {
-  const normalizeTicker = (value) => {
+  const normalizeSymbol = (value) => {
     const risk = config.risk || {};
     const exclude = ['TICKER', 'SYMBOL'];
-    const max = risk.parsing?.maxTickerLength ?? 12;
-    if (exclude.includes(value.toUpperCase()) || value.length > max) return null;
-    return (
-      String(value || '')
-        .trim()
-        .toUpperCase() ?? null
-    );
+    const max = risk.parsing?.maxSymbolLength ?? 12;
+    const normalized = String(value || '')
+      .trim()
+      .toUpperCase()
+      .replace(/\s+/g, ' ');
+    if (!normalized) return null;
+    if (exclude.includes(normalized)) return null;
+    if (normalized.length > max) return null;
+    return normalized;
   };
 
   const normalizeIsin = (value) => {
@@ -19,25 +21,24 @@
   };
 
   const emptySnapshot = () => ({
-    tickers: new Set(),
+    symbols: new Set(),
     isins: new Set(),
     updatedAt: null,
     sources: [],
-    counts: { tickers: 0, isins: 0 },
+    counts: { symbols: 0, isins: 0 },
   });
-
-  let cache = { expiresAt: 0, snapshot: emptySnapshot() };
 
   const buildSnapshot = (payload) => {
     const snapshot = emptySnapshot();
     if (!payload || typeof payload !== 'object') return snapshot;
 
-    const tickers = Array.isArray(payload.tickers) ? payload.tickers : [];
+    // eslint-disable-next-line no-nested-ternary
+    const symbols = Array.isArray(payload.symbols) ? payload.symbols : Array.isArray(payload.symbols) ? payload.symbols : [];
     const isins = Array.isArray(payload.isins) ? payload.isins : [];
 
-    for (const item of tickers) {
-      const t = normalizeTicker(item);
-      if (t) snapshot.tickers.add(t);
+    for (const item of symbols) {
+      const t = normalizeSymbol(item);
+      if (t) snapshot.symbols.add(t);
     }
 
     for (const item of isins) {
@@ -57,30 +58,23 @@
 
     snapshot.updatedAt = payload.updatedAt || payload.updated_at || null;
     snapshot.sources = sources;
-    snapshot.counts = { tickers: snapshot.tickers.size, isins: snapshot.isins.size };
+    snapshot.counts = { symbols: snapshot.symbols.size, isins: snapshot.isins.size };
 
     return snapshot;
   };
 
   const getSnapshot = async () => {
     const risk = config.risk || {};
-    const ttlMs = risk.cache?.ttlMs || 60 * 1000;
     const key = risk.redis?.key || 'risk:1446f:exclusions';
-
-    const now = Date.now();
-    if (cache.expiresAt > now) return cache.snapshot;
 
     let raw = null;
     try {
-      raw = await lib.redis.get(key);
+      raw = await db.redis.get(key);
     } catch (error) {
       console.warn('risk exclusions: redis get failed', error?.message || error);
     }
 
-    if (!raw) {
-      cache = { expiresAt: now + ttlMs, snapshot: emptySnapshot() };
-      return cache.snapshot;
-    }
+    if (!raw) return emptySnapshot();
 
     let payload = null;
     try {
@@ -89,23 +83,22 @@
       console.warn('risk exclusions: invalid json payload');
     }
 
-    cache = { expiresAt: now + ttlMs, snapshot: buildSnapshot(payload) };
-    return cache.snapshot;
+    return buildSnapshot(payload);
   };
 
-  const matches = (snapshot, { ticker, isin } = {}) => {
+  const matches = (snapshot, { symbol, isin } = {}) => {
     if (!snapshot) return false;
-    const t = normalizeTicker(ticker);
+    const t = normalizeSymbol(symbol);
     const i = normalizeIsin(isin);
 
-    if (t && snapshot.tickers?.has?.(t)) return true;
+    if (t && snapshot.symbols?.has?.(t)) return true;
     if (i && snapshot.isins?.has?.(i)) return true;
     return false;
   };
 
-  const isExcluded = async ({ ticker, isin } = {}) => {
+  const isExcluded = async ({ symbol, isin } = {}) => {
     const snapshot = await getSnapshot();
-    return matches(snapshot, { ticker, isin });
+    return matches(snapshot, { symbol, isin });
   };
 
   const getMeta = async () => {
@@ -118,7 +111,7 @@
   };
 
   return {
-    normalizeTicker,
+    normalizeSymbol,
     normalizeIsin,
     getSnapshot,
     matches,

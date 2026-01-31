@@ -1,9 +1,10 @@
 async () => {
   const risk = config.risk || {};
   const sources = Array.isArray(risk.sources) ? risk.sources : [];
-  const minTickers = risk.min?.tickers ?? 20;
+  const minSymbols = risk.min?.symbols ?? 20;
   const minIsins = risk.min?.isins ?? 20;
   const key = risk.redis?.key || 'risk:1446f:exclusions';
+  const ttlSec = risk.redis?.ttlSec ?? 24 * 60 * 60;
   const timeoutMs = risk.fetch?.timeoutMs ?? 20 * 1000;
   const userAgent = risk.fetch?.userAgent || 'metaterminal-risk/1.0';
 
@@ -30,10 +31,11 @@ async () => {
 
   const getData = (cells, columns) => {
     const data = { symbol: null, isin: null };
+    if (!columns || typeof columns !== 'object') return data;
     for (const key of Object.keys(columns)) {
       data[key] =
         key === 'symbol'
-          ? lib.risk.exclusions.normalizeTicker(cells[columns[key]])
+          ? lib.risk.exclusions.normalizeSymbol(cells[columns[key]])
           : lib.risk.exclusions.normalizeIsin(cells[columns[key]]);
     }
     return data;
@@ -60,20 +62,31 @@ async () => {
     }
 
     const rows = extractTableRows(html);
-    const tickers = new Set();
+    const symbols = new Set();
     const isins = new Set();
 
     for (const cells of rows) {
       const { symbol, isin } = getData(cells, src.columns);
-      if (symbol) tickers.add(symbol);
-      if (isin) isins.add(isin);
+      if (symbol || isin) {
+        if (symbol) symbols.add(symbol);
+        if (isin) isins.add(isin);
+        continue;
+      }
+
+      for (const cell of cells) {
+        const maybeIsin = lib.risk.exclusions.normalizeIsin(cell);
+        if (maybeIsin) isins.add(maybeIsin);
+
+        const maybeSymbol = lib.risk.exclusions.normalizeSymbol(cell);
+        if (maybeSymbol) symbols.add(maybeSymbol);
+      }
     }
 
-    if (tickers.size < minTickers && isins.size < minIsins) {
-      throw new Error(src.name + ' parsed too few rows (ticker=' + tickers.size + ', isin=' + isins.size + ')');
+    if (symbols.size < minSymbols && isins.size < minIsins) {
+      throw new Error(src.name + ' parsed too few rows (symbol=' + symbols.size + ', isin=' + isins.size + ')');
     }
 
-    return { tickers, isins };
+    return { symbols, isins };
   };
 
   const allSymbols = new Set();
@@ -83,7 +96,7 @@ async () => {
   for (const src of sources) {
     const result = await loadSource(src);
     sourceNames.push(src.name);
-    for (const t of result.tickers) allSymbols.add(t);
+    for (const t of result.symbols) allSymbols.add(t);
     for (const i of result.isins) allIsins.add(i);
   }
 
@@ -92,10 +105,10 @@ async () => {
     sources: sourceNames,
     symbols: Array.from(allSymbols),
     isins: Array.from(allIsins),
-    counts: { tickers: allSymbols.size, isins: allIsins.size },
+    counts: { symbols: allSymbols.size, isins: allIsins.size },
   };
 
-  await db.redis.set(key, JSON.stringify(payload));
+  await db.redis.set(key, JSON.stringify(payload), { EX: ttlSec });
 
   return payload;
 };

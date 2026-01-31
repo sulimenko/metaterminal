@@ -9,19 +9,17 @@
   ],
   redis: {
     key: 'risk:1446f:exclusions',
+    ttlSec: 24 * 60 * 60,
   },
   min: {
-    tickers: 20,
+    symbols: 20,
     isins: 20,
-  },
-  cache: {
-    ttlMs: 60 * 1000,
   },
   fetch: {
     timeoutMs: 20 * 1000,
     userAgent: 'metaterminal-risk/1.0',
   },
   parsing: {
-    maxTickerLength: 10,
+    maxSymbolLength: 10,
   },
 });

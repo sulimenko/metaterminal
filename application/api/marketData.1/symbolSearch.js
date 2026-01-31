@@ -25,12 +25,11 @@
       ['NASDAQ', 'NYSE', 'AMEX', 'CBOE', 'OTC', 'LSE', 'LSEIOB1', 'BINANCE'].includes(each.prefix || each.exchange),
     );
     for (const each of list) each.source = each.prefix !== undefined ? each.prefix : each.exchange;
-    const snapshot = await lib.risk.getSnapshot();
+    const snapshot = await lib.risk.exclusions.getSnapshot();
     const filtered = [];
     for (const each of list) {
-      const ticker = each.symbol || each.ticker || each.name;
-      const isin = each.isin;
-      if (!lib.risk.matches(snapshot, { ticker, isin })) filtered.push(each);
+      const { symbol, isin } = each;
+      if (!lib.risk.exclusions.matches(snapshot, { symbol, isin })) filtered.push(each);
     }
     // console.info(list);
     return filtered;
