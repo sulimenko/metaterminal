@@ -20,7 +20,7 @@
     "types": "tsc",
     "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
     "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\" \"**/*.ts\"",
-    "dev": "nodemon --inspect=0.0.0.0:9229 server.js",
+    "dev": "CHOKIDAR_USEPOLLING=true CHOKIDAR_INTERVAL=1000 nodemon --legacy-watch --delay 700ms --inspect=0.0.0.0:9229 server.js",
     "db": "metasql c"
   },
   "engines": {

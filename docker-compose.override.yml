@@ -12,3 +12,4 @@ services:
       NODE_OPTIONS: ''
     volumes:
       - ./application:/usr/server/application
+      - ./node_modules:/usr/server/node_modules

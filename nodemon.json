@@ -1,5 +1,16 @@
 {
   "watch": ["server.js", "application"],
   "legacyWatch": true,
+  "ignore": [
+    ".git/**",
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    "log/**",
+    "**/*.log",
+    "tmp/**",
+    ".cache/**"
+  ],  
+  "delay": "700ms",
   "ext": "js,json"
 }
