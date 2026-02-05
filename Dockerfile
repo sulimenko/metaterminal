@@ -1,8 +1,11 @@
-FROM node:24-alpine
+FROM node:18-alpine
 WORKDIR /usr/server
+RUN apk add --no-cache tini
+COPY package*.json ./
+RUN npm ci --omit=dev
 COPY . .
-ARG NODE_ENV=production
-ENV NODE_ENV=$NODE_ENV
-RUN if [ "$NODE_ENV" = "production" ]; then npm ci --only=production; else npm ci; fi
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=--max-old-space-size=2560
 EXPOSE 8000
-CMD ["node", "server.js"]
+ENTRYPOINT ["/sbin/tini","--"]
+CMD ["npm", "start"]

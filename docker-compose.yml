@@ -1,19 +1,17 @@
 services:
-  api:
+  metaterminal:
     build:
-      context: .
+      context: /var/www/metaterminal
       dockerfile: Dockerfile
-    restart: always
+    container_name: metaterminal
+    restart: unless-stopped
+    network_mode: host
     env_file:
       - .env
     environment:
       NODE_ENV: production
-    networks:
-      ptfin-backend:
-        aliases:
-          - metaterminal.ptfin.local
-
-networks:
-  ptfin-backend:
-    external: true
-    name: ptfin-backend
+      NODE_OPTIONS: --max-old-space-size=2560
+      REDIS_HOST: 127.0.0.1
+      REDIS_PORT: "6379"
+    volumes:
+      - ./log:/usr/server/log
