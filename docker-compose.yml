@@ -1,5 +1,5 @@
 services:
-  api:
+  metaterminal:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,6 +8,7 @@ services:
       - .env
     environment:
       NODE_ENV: production
+      NODE_OPTIONS: --max-old-space-size=2560
     volumes:
       - ./log:/usr/server/log
     networks:
