@@ -3,11 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     env_file:
       - .env
     environment:
       NODE_ENV: production
+      NODE_OPTIONS: --max-old-space-size=2560
     volumes:
       - ./log:/usr/server/log
     networks:
