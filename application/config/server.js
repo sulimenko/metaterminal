@@ -5,7 +5,7 @@
   nagle: false,
   timeouts: {
     bind: 2000,
-    start: 3000,
+    start: 5000,
     stop: 5000,
     request: 25000,
     watch: 1000,
