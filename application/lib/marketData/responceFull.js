@@ -1,11 +1,16 @@
 async (chart, end) => {
   const waitChart = async (result, chart, end, period = 200) => {
     while (new Date().getTime() <= end) {
-      if (chart.data.full.length > 0) {
-        result.chart = JSON.parse(JSON.stringify(chart.data));
+      const data = await lib.marketData.redisChart.get({
+        symbol: chart.symbol,
+        source: chart.source,
+        period: chart.period,
+      });
+      if (data.full.length > 0) {
+        result.chart = data;
         return result;
       }
-      // console.info('responceFull', chart.symbol, new Date().getTime(), end, chart.data);
+      // console.info('responceFull', chart.symbol, new Date().getTime(), end, data);
       await lib.utils.wait(period);
     }
     return result;

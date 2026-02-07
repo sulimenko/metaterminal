@@ -1,0 +1,8 @@
+### Symbol search request (HTTP)
+POST http://127.0.0.1:8000/api/marketData/symbolSearch
+Content-Type: application/json
+Accept: application/json
+
+{
+  "data": "CHTR"
+}

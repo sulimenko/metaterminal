@@ -1,4 +1,5 @@
 async () => {
+  lib.marketData.streamStart();
   if (application.worker.id === 'W1') {
     console.info('start lib.marketData');
     setInterval(() => {

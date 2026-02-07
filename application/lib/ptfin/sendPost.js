@@ -8,7 +8,8 @@ async ({ path, data, type = 'application/json' }) => {
   // for (const key of Object.keys(data)) send_data[key] = data[key];
 
   try {
-    const res = await fetch(config.ptfin.main.url + path, {
+    const address = config.ptfin.main.url + path;
+    const res = await fetch(address, {
       method: 'POST',
       signal: controller.signal,
       headers: {
@@ -23,8 +24,11 @@ async ({ path, data, type = 'application/json' }) => {
     const response = res.status === 200 ? await res.json() : await res.text();
     return response;
   } catch (error) {
-    if (error.name === 'AbortError') console.error('Request aborted by timeout!');
-    else console.error('Request error code', error.message);
+    if (error.name === 'AbortError') {
+      console.error('Request aborted by timeout!');
+    } else {
+      console.error('Request error code', error.message);
+    }
     return error.message;
   }
 };

@@ -16,7 +16,7 @@
     }
 
     client.on('close', () => {
-      console.warn('Socket close user_id:', client.session.state.login);
+      console.warn('Socket close login:', client.session.state.login);
       this.cleaningTimers.set(
         userId,
         setTimeout(() => lib.marketData.existChart({ userId: client.session.state.user_id }), 30 * 60 * 1000),
