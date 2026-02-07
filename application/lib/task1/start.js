@@ -1,4 +1,5 @@
 async () => {
+  console.debug(`lib.task1.start begin ${application.worker.id}`);
   if (!config.examples.scheduler) return;
   if (application.worker.id !== 'W1') return;
   setTimeout(async () => {
@@ -10,4 +11,5 @@ async () => {
     });
     console.info('Add task', res);
   }, 1000);
+  console.debug(`lib.task1.start end ${application.worker.id}`);
 };

@@ -1,4 +1,5 @@
 async () => {
+  console.debug(`lib.resmon.start begin ${application.worker.id}`);
   if (!config.resmon.active) return;
   setInterval(async () => {
     const stats = await lib.resmon.getStatistics();
@@ -9,4 +10,5 @@ async () => {
     console.debug(`Heap: ${used} of ${total}, ext: ${ext}`);
     console.debug(`Contexts: ${contexts}, detached: ${detached}`);
   }, config.resmon.interval);
+  console.debug(`lib.resmon.start end ${application.worker.id}`);
 };

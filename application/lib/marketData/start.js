@@ -1,4 +1,5 @@
 async () => {
+  console.debug(`lib.marketData.start begin ${application.worker.id}`);
   lib.marketData.streamStart();
   if (application.worker.id === 'W1') {
     console.info('start lib.marketData');
@@ -11,4 +12,5 @@ async () => {
       if (list.length > 0) lib.marketData.requestQuote({ instruments: list });
     }, 3 * 60 * 1000);
   }
+  console.debug(`lib.marketData.start end ${application.worker.id}`);
 };

@@ -5,13 +5,23 @@
  * @returns {Promise<void>}
  */
 async () => {
+  console.debug(`lib.marketData.streamStart begin ${application.worker.id}`);
   let client = lib.redis?.client;
+  let waited = 0;
   for (let i = 0; i < 60; i++) {
     if (client && client.isOpen) break;
     await lib.utils.wait(1000);
     client = lib.redis?.client;
+    waited++;
+    if (waited === 5) {
+      console.debug(`lib.marketData.streamStart waiting for redis ${application.worker.id}`);
+    }
   }
-  if (!client || !client.isOpen) return;
+  if (!client || !client.isOpen) {
+    console.debug(`lib.marketData.streamStart exit (no redis) ${application.worker.id}`);
+    return;
+  }
+  console.debug(`lib.marketData.streamStart redis ok ${application.worker.id}`);
 
   const stream = process.env.redis_chart_stream || 'marketData:charts';
   const group = process.env.redis_chart_group || 'marketDataCharts';
@@ -72,4 +82,5 @@ async () => {
   };
 
   loop();
+  console.debug(`lib.marketData.streamStart loop started ${application.worker.id}`);
 };

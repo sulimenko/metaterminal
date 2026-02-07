@@ -1,4 +1,5 @@
 async () => {
+  console.debug(`lib.invoke1.start begin ${application.worker.id}`);
   if (!config.examples.invoke) return;
   if (application.worker.id !== 'W1') return;
   const res = await application.invoke({
@@ -7,4 +8,5 @@ async () => {
     exclusive: true,
   });
   console.info('Invoke example', res);
+  console.debug(`lib.invoke1.start end ${application.worker.id}`);
 };

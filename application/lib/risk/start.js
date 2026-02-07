@@ -1,4 +1,5 @@
 async () => {
+  console.debug(`lib.risk.start begin ${application.worker.id}`);
   if (application.worker.id === 'W1') {
     console.info('start lib.risk');
     await lib.utils.wait(100);
@@ -25,4 +26,5 @@ async () => {
     //   console.info('Add task', res);
     // }, 3000);
   }
+  console.debug(`lib.risk.start end ${application.worker.id}`);
 };

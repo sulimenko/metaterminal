@@ -1,4 +1,5 @@
 async () => {
+  console.debug(`db.redis.start begin ${application.worker.id}`);
   // Если redis_disabled=1, то не подключаемся к редису и сразу выходим (сценарий тестового запуска)
   if (process.env['redis_disabled'] === '1') {
     if (application.worker.id === 'W1') {
@@ -9,6 +10,7 @@ async () => {
       lib.redis = {};
     }
     lib.redis.client = null;
+    console.debug(`db.redis.start end (disabled) ${application.worker.id}`);
     return;
   }
 
@@ -22,6 +24,7 @@ async () => {
     lib.redis = {};
   }
   lib.redis.client = client;
+  console.debug(`db.redis.client created ${application.worker.id} url=${url ? 'env' : 'default'}`);
   client.on('error', async (error) => {
     if (application.worker.id === 'W1') {
       console.warn('No redis service detected, so quit client');
@@ -32,9 +35,11 @@ async () => {
   });
   try {
     await client.connect();
+    console.debug(`db.redis.connected ${application.worker.id}`);
   } catch (error) {
     if (application.worker.id === 'W1') {
       console.warn('Redis connect failed:', error.message);
     }
   }
+  console.debug(`db.redis.start end ${application.worker.id}`);
 };
