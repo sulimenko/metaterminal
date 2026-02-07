@@ -8,7 +8,13 @@ async ({ login }) => {
     symbol: wl.map((each) => each.symbol),
   });
 
-  for (const each of wl) each.instrument = list.find((instrument) => instrument.symbol === each.symbol) || {};
+  const instruments = {};
+  for (const inst of list) instruments[inst.symbol] = inst;
+  for (const each of wl) {
+    const i = instruments[each.symbol] || { symbol: each.symbol, listing_exchange: each.source, asset_category: 'STK', multiplier: 1 };
+    if (!i.listing_exchange) i.listing_exchange = each.source;
+    each.instrument = i;
+  }
   if (wl.length > 0) return wl;
 
   const wlDefault = await db.pg.select('terminal_wls', ['name', 'symbol', 'symbol_id', 'source', 'order'], { login: 'default' });

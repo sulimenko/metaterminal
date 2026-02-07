@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
 ({
   access: 'public',
   method: async ({ data }) => {
-    console.error('error on token:', data);
-    console.error('error on client:', context.client);
+    const { type, id, error } = data;
+    if (error.code !== 403) {
+      console.error('error on data:', data);
+      console.error('error on client:', context.client);
+    }
     return 'OK';
   },
 });

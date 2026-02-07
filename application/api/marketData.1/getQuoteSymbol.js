@@ -1,6 +1,7 @@
 ({
   access: 'private',
-  method: ({ symbol }) => {
-    return lib.marketData.getQuote({ symbol });
+  method: async ({ symbol }) => {
+    const quote = await lib.marketData.getQuote({ symbol });
+    return quote;
   },
 });
