@@ -11,6 +11,8 @@ services:
       NODE_OPTIONS: --max-old-space-size=2560
     volumes:
       - ./log:/usr/server/log
+      - ./fixed/impress/lib/application.js:/usr/server/node_modules/impress/lib/application.js:ro
+      - ./fixed/impress/lib/worker.js:/usr/server/node_modules/impress/lib/worker.js:ro
     networks:
       ptfin-backend:
         aliases:
