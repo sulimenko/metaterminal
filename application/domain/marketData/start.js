@@ -44,4 +44,38 @@ async () => {
 
   // console.debug('Connect to alpaca');
   console.debug('Connect to tv: ' + JSON.stringify(status));
+
+  // Вотчдог: переподключаемся, если нет событий уже 10 минут
+
+  // Здесь инициализируем lastChartTs
+  if (!domain.marketData.lastChartTs) domain.marketData.lastChartTs = Date.now();
+
+  // А тут определяем функцию, которая будет раз в 60 секунд проверять что как
+  // Интервал в 60 секунд в конце
+  if (!domain.marketData._chartWatchdog) {
+    domain.marketData._chartWatchdog = setInterval(async () => {
+      const idleMs = Date.now() - (domain.marketData.lastChartTs || 0);
+
+      // Здесь задаётся 10-минутный интервал
+      if (idleMs < 10 * 60 * 1000) {
+        return;
+      }
+
+      // Ай-яй-яй, случилось нечто нехорошее, нет событий
+      console.warn(`TV chart watchdog: no events for ${Math.floor(idleMs / 1000)}s, reconnecting`);
+
+      try {
+        await domain.marketData.tvClient.close();
+      } catch (err) {
+        console.warn('TV watchdog close failed:', err?.message || err);
+      }
+
+      try {
+        const st = await domain.marketData.tvClient.connect();
+        console.warn('TV watchdog reconnect status:', st);
+      } catch (err) {
+        console.error('TV watchdog reconnect failed:', err?.message || err);
+      }
+    }, 60 * 1000);
+  }
 };
