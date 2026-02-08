@@ -64,6 +64,22 @@ async () => {
       // Ай-яй-яй, случилось нечто нехорошее, нет событий
       console.warn(`TV chart watchdog: no events for ${Math.floor(idleMs / 1000)}s, reconnecting`);
 
+      // Снимок состояния клиента для последующего анализа
+      try {
+        const client = domain.marketData.tvClient.client;
+        const snapshot =
+          typeof client?.getDebugState === 'function'
+            ? client.getDebugState()
+            : {
+                hasClient: !!client,
+                chartsCount: typeof client?.getCharts === 'function' ? Object.keys(client.getCharts() || {}).length : undefined,
+                quotesCount: typeof client?.getQuotes === 'function' ? Object.keys(client.getQuotes() || {}).length : undefined,
+              };
+        console.warn('TV chart watchdog snapshot:', snapshot);
+      } catch (err) {
+        console.warn('TV chart watchdog snapshot failed:', err?.message || err);
+      }
+
       try {
         await domain.marketData.tvClient.close();
       } catch (err) {
