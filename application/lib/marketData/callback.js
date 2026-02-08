@@ -6,6 +6,10 @@
   } else if (['session', 'series', 'symbol', 'quote'].includes(name)) {
     if (name === 'session') console.warn(name, packet);
   } else {
+    if (name === 'chart_history' || name === 'chart_update') {
+      // Сохраняем последний таймштамп для вотчдога
+      domain.marketData.lastChartTs = Date.now();
+    }
     if ((name === 'chart_history' || name === 'chart_update') && !packet.__fromStream) {
       lib.marketData.streamPublish({ name, packet });
     }
